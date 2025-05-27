@@ -35,12 +35,17 @@
     <?php
     $dev_mode = getenv('DEV_MODE');
     if ($dev_mode == "staging") { ?>
+
         <script type="text/javascript">
+            var devMode = "staging"
             var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
         </script>
 
-    <?php }
-    ?>
+    <?php } else {; ?>
+        <script type="text/javascript">
+            var devMode = "production"
+        </script>
+    <?php } ?>
 </head>
 
 <body <?php body_class(); ?>>
@@ -61,7 +66,7 @@
                     }
                 } else {
                     document.getElementById('moving-container').style.display = 'none';
-                    document.getElementById('cleaning-container').style.display = 'block';
+                    document.getElementById('cleaning-container').style.display = 'flex';
                 }
 
             }
@@ -136,6 +141,7 @@
     </style>
     <main class=" flex-1">
         <section class=" py-12 h-full">
+            <!-- Moving Container -->
             <div class="container h-full relative overflow-hidden" id="moving-container">
                 <div class=" flex flex-col h-full step active" id="step1">
                     <h2 class=" mb-8">Things to move</h2>
@@ -226,7 +232,7 @@
                                 height: 59px;
                             }
                         </style>
-                        <button onclick="goToBlock2()" id="set-addresses" class="cursor-pointer next-btn !text-2xl font-bold" data-step="2">
+                        <button onclick="goToBlock2()" class="cursor-pointer next-btn !text-2xl font-bold" data-step="2">
                             <span>Next</span>
                             <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.7159 3.51593C13.0034 3.22847 13.3933 3.06699 13.7999 3.06699C14.2065 3.06699 14.5965 3.22847 14.884 3.51593L21.784 10.4159C22.0715 10.7035 22.2329 11.0934 22.2329 11.5C22.2329 11.9066 22.0715 12.2965 21.784 12.5841L14.884 19.4841C14.5948 19.7634 14.2075 19.9179 13.8055 19.9144C13.4034 19.9109 13.0188 19.7497 12.7345 19.4654C12.4503 19.1811 12.289 18.7965 12.2855 18.3945C12.282 17.9924 12.4366 17.6051 12.7159 17.3159L16.8666 13.0333H2.29993C1.89327 13.0333 1.50326 12.8718 1.2157 12.5842C0.928149 12.2967 0.766602 11.9067 0.766602 11.5C0.766602 11.0933 0.928149 10.7033 1.2157 10.4158C1.50326 10.1282 1.89327 9.96666 2.29993 9.96666H16.8666L12.7159 5.68406C12.4284 5.39652 12.2669 5.00658 12.2669 4.59999C12.2669 4.19341 12.4284 3.80347 12.7159 3.51593Z" fill="white" />
@@ -380,7 +386,7 @@
                     <div class="bg-[#F7F7E0] px-10 py-5 rounded-[5px] flex justify-between items-center mt-[30px] relative w-full">
                         <div></div>
                         <div class="text-2xl text-[#3D3D3D] font-bold absolute left-1/2 -translate-x-1/2">You are only one click away!</div>
-                        <button id="send-email" class="cursor-pointer next-btn !text-2xl font-bold">
+                        <button id="send-moving-quote" class="cursor-pointer next-btn !text-2xl font-bold">
                             <span>Submit</span>
                             <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.7159 3.51593C13.0034 3.22847 13.3933 3.06699 13.7999 3.06699C14.2065 3.06699 14.5965 3.22847 14.884 3.51593L21.784 10.4159C22.0715 10.7035 22.2329 11.0934 22.2329 11.5C22.2329 11.9066 22.0715 12.2965 21.784 12.5841L14.884 19.4841C14.5948 19.7634 14.2075 19.9179 13.8055 19.9144C13.4034 19.9109 13.0188 19.7497 12.7345 19.4654C12.4503 19.1811 12.289 18.7965 12.2855 18.3945C12.282 17.9924 12.4366 17.6051 12.7159 17.3159L16.8666 13.0333H2.29993C1.89327 13.0333 1.50326 12.8718 1.2157 12.5842C0.928149 12.2967 0.766602 11.9067 0.766602 11.5C0.766602 11.0933 0.928149 10.7033 1.2157 10.4158C1.50326 10.1282 1.89327 9.96666 2.29993 9.96666H16.8666L12.7159 5.68406C12.4284 5.39652 12.2669 5.00658 12.2669 4.59999C12.2669 4.19341 12.4284 3.80347 12.7159 3.51593Z" fill="white" />
@@ -389,7 +395,8 @@
                     </div>
                 </div>
             </div>
-            <div class="container h-full relative overflow-hidden hidden" id="cleaning-container">
+            <!-- Cleaning Container -->
+            <div class="container h-full relative overflow-hidden flex-col hidden" id="cleaning-container">
                 <div class="flex flex-row-reverse justify-between">
                     <div class="max-w-[590px]">
                         <h4 class="max-w-[420px] mb-[26px]">Standard moving cleaning includes:</h4>
@@ -437,6 +444,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-[#F7F7E0] px-10 py-5 rounded-[5px] flex justify-between items-center mt-auto relative w-full">
+                    <div></div>
+                    <div class="text-2xl text-[#3D3D3D] font-bold absolute left-1/2 -translate-x-1/2">You are only one click away!</div>
+                    <button id="send-cleaning-quote" class="cursor-pointer next-btn !text-2xl font-bold">
+                        <span>Submit</span>
+                        <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.7159 3.51593C13.0034 3.22847 13.3933 3.06699 13.7999 3.06699C14.2065 3.06699 14.5965 3.22847 14.884 3.51593L21.784 10.4159C22.0715 10.7035 22.2329 11.0934 22.2329 11.5C22.2329 11.9066 22.0715 12.2965 21.784 12.5841L14.884 19.4841C14.5948 19.7634 14.2075 19.9179 13.8055 19.9144C13.4034 19.9109 13.0188 19.7497 12.7345 19.4654C12.4503 19.1811 12.289 18.7965 12.2855 18.3945C12.282 17.9924 12.4366 17.6051 12.7159 17.3159L16.8666 13.0333H2.29993C1.89327 13.0333 1.50326 12.8718 1.2157 12.5842C0.928149 12.2967 0.766602 11.9067 0.766602 11.5C0.766602 11.0933 0.928149 10.7033 1.2157 10.4158C1.50326 10.1282 1.89327 9.96666 2.29993 9.96666H16.8666L12.7159 5.68406C12.4284 5.39652 12.2669 5.00658 12.2669 4.59999C12.2669 4.19341 12.4284 3.80347 12.7159 3.51593Z" fill="white" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </section>
         <script>
@@ -464,6 +481,33 @@
             function goToBlock2() {
                 document.getElementById('step1').classList.remove('active');
                 document.getElementById('step2').classList.add('active');
+
+                const items = document.querySelectorAll(".item");
+                let data = {};
+
+                items.forEach((item) => {
+                    const id = item.dataset.id;
+                    const volume = parseFloat(item.dataset.volume);
+                    const qty = parseInt(item.querySelector(".qty").textContent);
+                    if (qty > 0) {
+                        data[id] = {
+                            quantity: qty,
+                            volumePerItem: volume,
+                            totalVolume: Math.round(qty * volume * 100) / 100,
+                        };
+                    }
+                });
+                console.log(data);
+                // Store in sessionStorage (client-side)
+                sessionStorage.setItem("itemsData", JSON.stringify(data));
+                const stepperStep2 = document.querySelector('#stepper-step2')
+                const stepperStep3 = document.querySelector('#stepper-step3')
+
+                stepperStep2.classList.remove('active')
+                stepperStep2.classList.add('finished')
+
+                stepperStep3.classList.add('active')
+                stepperStep3.classList.remove('next')
             }
         </script>
         <?php get_footer(); ?>

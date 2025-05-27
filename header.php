@@ -33,12 +33,17 @@
     <?php
     $dev_mode = getenv('DEV_MODE');
     if ($dev_mode == "staging") { ?>
+
         <script type="text/javascript">
-            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";            
+            var devMode = "staging"
+            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
         </script>
 
-    <?php }
-    ?>
+    <?php } else {; ?>
+        <script type="text/javascript">
+            var devMode = "production"
+        </script>
+    <?php } ?>
 </head>
 
 <body <?php body_class(); ?>>

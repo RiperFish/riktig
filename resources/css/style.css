@@ -91,7 +91,7 @@ ul {
 /*--------------------------*/
 /*--------- Header ---------*/
 /*--------------------------*/
-.home-hero-img {
+.hero-img {
   position: absolute;
   right: 0;
   top: 0;
@@ -246,14 +246,15 @@ input[type="date"]:focus::-webkit-datetime-edit {
 }
 
 @media (width <= 1440px) {
-  .home-hero-img {
+  .hero-img {
     border-radius: 0;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     position: relative;
     width: 100%;
   }
-  .home .hero-section .container {
+  .home .hero-section .container,
+  .about-hero-section .container {
     max-width: unset;
     display: flex;
     justify-content: space-between;
@@ -263,10 +264,12 @@ input[type="date"]:focus::-webkit-datetime-edit {
 }
 
 @media (width <= 1024px) {
-  .home .hero-section .container {
+  .home .hero-section .container,
+  .about-hero-section .container {
     flex-direction: column;
   }
-  .home .hero-section .text-container{
+  .home .hero-section .text-container,
+  .about-hero-section .text-container{
     max-width: unset;
     margin-inline: 80px;
   }

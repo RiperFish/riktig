@@ -26,44 +26,46 @@ document.querySelectorAll(".accordion-toggle").forEach((button) => {
   });
 });
 
-
+  console.log("dsfgsdg");
 jQuery(document).ready(function ($) {
-  const sendForm = document.querySelector("#set-addresses");
+  const sendMovingQuote = document.querySelector("#send-moving-quote");
+  let ajaxUrl = "";
+  if (devMode == "staging") {
+    ajaxUrl = ajaxurl;
+  } else {
+    ajaxUrl = my_ajax_object.ajax_url;
+  }
 
-  if (sendForm !== null) {
-    sendForm.addEventListener("click", () => {
-      const items = document.querySelectorAll(".item");
-      let data = {};
+  let emailObject = {
+    clientInfos : [],
+    itemsData : [],
+    address : [],
+    volume:[]
+  }
 
-      items.forEach((item) => {
-        const id = item.dataset.id;
-        const volume = parseFloat(item.dataset.volume);
-        const qty = parseInt(item.querySelector(".qty").textContent);
-        if (qty > 0) {
-          data[id] = {
-            quantity: qty,
-            volumePerItem: volume,
-            totalVolume: Math.round(qty * volume * 100) / 100,
-          };
-        }
-      });
-      console.log(data);
-      // Store in sessionStorage (client-side)
-      sessionStorage.setItem("itemsData", JSON.stringify(data));
-      const stepperStep2 = document.querySelector('#stepper-step2')
-      const stepperStep3 = document.querySelector('#stepper-step3')
+  let clientInfos = JSON.parse(sessionStorage.getItem('clientInfos'))
+  console.log(clientInfos['serviceType']);
+  
+  if(clientInfos['serviceType'] == "moving"){
+    const selectedItems = JSON.parse(sessionStorage.getItem('itemsData'))
+    let volume = "50"
+    emailObject.clientInfos.push(clientInfos)
+    emailObject.itemsData.push(selectedItems)
+    emailObject.volume.push(volume)
+  }
 
-      stepperStep2.classList.remove('active')
-      stepperStep2.classList.add('finished')
-
-      stepperStep3.classList.add('active')
-      stepperStep3.classList.remove('next')
-
+  console.log(emailObject);
+  
+  
+  
+  
+  if (sendMovingQuote !== null) {
+    sendMovingQuote.addEventListener("click", () => {
       $.ajax({
-        url: ajaxurl,
+        url: ajaxUrl,
         type: "POST",
         data: {
-          action: "my_ajax_action",
+          action: "send_moving_quote_action",
           //nonce: my_ajax_object.nonce,
           message: "Hello from JS",
         },

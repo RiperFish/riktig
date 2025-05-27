@@ -62,7 +62,7 @@ function rikti_enqueue_assets()
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce'    => wp_create_nonce('my_nonce')
     ]);
-    wp_enqueue_script( 'jquery' );
+    wp_enqueue_script('jquery');
 }
 add_action('wp_enqueue_scripts', 'rikti_enqueue_assets');
 
@@ -70,15 +70,86 @@ add_action('wp_enqueue_scripts', 'rikti_enqueue_assets');
 add_filter('wpcf7_autop_or_not', '__return_false');
 //include get_template_directory() . '/resources/views/layouts/main.php';
 
-add_action('wp_ajax_my_ajax_action', 'my_ajax_callback');
-add_action('wp_ajax_nopriv_my_ajax_action', 'my_ajax_callback'); // for non-logged-in users
+add_action('wp_ajax_send_moving_quote_action', 'send_moving_quote_callback');
+add_action('wp_ajax_nopriv_send_moving_quote_action', 'send_moving_quote_callback'); // for non-logged-in users
 
-function my_ajax_callback()
+function send_moving_quote_callback()
 {
+    $logo_url = 'https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; // Replace with your logo
+    $user = [
+        'serviceType' => 'moving',
+        'propertyType' => 'business',
+        'email' => 'john@example.com',
+        'name' => 'John Doe',
+        'phone' => '+123456789'
+    ];
+
+    $body = '
+        <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="' . $logo_url . '" alt="Logo" style="max-height: 60px;">
+            </div>
+
+            <h2 style="margin-bottom: 10px;">Client Request Summary</h2>
+
+            <p><strong>Service:</strong> ' . ucfirst($user['serviceType']) . '</p>
+            <p><strong>Property Type:</strong> ' . ucfirst($user['propertyType']) . '</p>
+            <p><strong>Name:</strong> ' . htmlspecialchars($user['name']) . '</p>
+            <p><strong>Email:</strong> ' . htmlspecialchars($user['email']) . '</p>
+            <p><strong>Phone:</strong> ' . htmlspecialchars($user['phone']) . '</p>
+
+            <h3 style="margin-top: 20px;">Items:</h3>
+            <table cellspacing="0" cellpadding="8" border="1" style="border-collapse: collapse; width: 100%; margin-top: 10px;">
+                <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th align="left">Item</th>
+                    <th align="right">Qty</th>
+                    <th align="right">Vol (m³)</th>
+                    <th align="right">Total Vol</th>
+                </tr>
+                </thead>
+                <tbody>';
+
+    $totalVolume = 0;
+    foreach ($data as $id => $item) {
+        $qty = (int) $item['quantity'];
+        $vol = (float) $item['volumePerItem'];
+        $total = round($qty * $vol, 2);
+        $totalVolume += $total;
+
+        $body .= "<tr>
+            <td>" . ucfirst($id) . "</td>
+            <td align='right'>{$qty}</td>
+            <td align='right'>{$vol}</td>
+            <td align='right'>{$total}</td>
+        </tr>";
+    }
+
+    $body .= "<tr style='font-weight: bold; background-color: #fafafa;'>
+            <td colspan='3' align='right'>Total Volume:</td>
+            <td align='right'>" . round($totalVolume, 2) . " m³</td>
+        </tr>";
+
+    $body .= '</tbody></table>
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; font-size: 12px; color: #888;">
+            This message was sent from your website. If you have questions, contact support at <a href="mailto:support@yourdomain.com">support@yourdomain.com</a>.
+        </div>
+    </div>';
+
+    add_filter('wp_mail_content_type', function () {
+        return "text/html";
+    });
+    $sent = wp_mail('mouss@4444.lt', 'New Request from ' . $user['name'], $body);
+    remove_filter('wp_mail_content_type', 'set_html_content_type');
     //check_ajax_referer('my_nonce', 'nonce');
 
     // Example response
-    wp_send_json_success(['received' => $_POST['message']]);
+    if ($sent) {
+        echo 'Email sent successfully!';
+    } else {
+        echo 'Failed to send email.';
+    }
+    //wp_send_json_success(['received' => $_POST['message']]);
 }
 
 

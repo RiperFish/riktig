@@ -1,23 +1,24 @@
 <?php /* Template Name: About us template  */ ?>
 <?php get_header(); ?>
 
-<section class="about-hero-section pt-[68px] bg-accent pb-20 relative mb-10">
-    <div class="container">
-        <div class="max-w-[570px]">
-            <h1 class="mb-7">
-                About Us
-            </h1>
-            <div>
-                <p class="text-white opacity-80">
-                    Based locally in Oslo, we specialize in moving for individuals and businesses in Oslo and Akershus, but we also deliver moving loads throughout Norway, Sweden and Denmark. Riktig Valg is not the oldest player in the moving industry, but we have a lot of good experience and can point to very good references from our customers (See page “References”). We value customers and focus on quality, so moving with us should be a safe and good experience.
-                </p>
-                <p class="text-white opacity-80">
-                    Riktig Valg moving company can assist with everything within moving services, whether you just want transportation, or help with everything from packing and washing. Our moving trucks and professionals are ready to transport your moving load. If you are going to choose a moving company in Oslo and Akershus, Riktig Valg is the right moving company for you. </p>
-            </div>
+<section class="about-hero-section bg-accent relative mb-10">
+    <div class="outer-container relative mx-auto" style="max-width: 1440px;">
+        <div class="container" style="margin-inline: unset;">
+            <div class="text-container max-w-[570px] pt-[68px] pb-20 ml-20">
+                <h1 class="mb-7">
+                    About Us
+                </h1>
+                <div>
+                    <p class="text-white opacity-80">
+                        Based locally in Oslo, we specialize in moving for individuals and businesses in Oslo and Akershus, but we also deliver moving loads throughout Norway, Sweden and Denmark. Riktig Valg is not the oldest player in the moving industry, but we have a lot of good experience and can point to very good references from our customers (See page “References”). We value customers and focus on quality, so moving with us should be a safe and good experience.
+                    </p>
+                    <p class="text-white opacity-80">
+                        Riktig Valg moving company can assist with everything within moving services, whether you just want transportation, or help with everything from packing and washing. Our moving trucks and professionals are ready to transport your moving load. If you are going to choose a moving company in Oslo and Akershus, Riktig Valg is the right moving company for you. </p>
+                </div>
+            </div>        
+            <img class="hero-img" src="<?php echo URL_BASE; ?>/images/home-hero-img.jpg" alt="<?php bloginfo('name'); ?>">
         </div>
-
     </div>
-
 </section>
 <section class=" mb-14">
     <div class="container flex gap-9">

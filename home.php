@@ -23,7 +23,7 @@ if (!empty($repeater_data)) : ?>
 
 <section class="hero-section bg-accent  relative mb-10">
     <div class="outer-container relative mx-auto" style="max-width: 1440px;">
-        <div class="container" style="margin-inline: unset" ;>
+        <div class="container" style="margin-inline: unset;">
             <div class="text-container max-w-[570px] pt-[68px] pb-20 ml-20">
                 <h1 class="mb-1.5">
                     <?php echo get_field('hero_section')['headline']; ?>
@@ -49,7 +49,7 @@ if (!empty($repeater_data)) : ?>
                     <a href="#" class="btn btn-secondary text-white">I Need a Cleaning</a>
                 </div>
             </div>
-            <img class="home-hero-img" src="<?php echo URL_BASE; ?>/images/home-hero-img.jpg" alt="<?php bloginfo('name'); ?>">
+            <img class="hero-img" src="<?php echo URL_BASE; ?>/images/home-hero-img.jpg" alt="<?php bloginfo('name'); ?>">
         </div>
     </div>
 
@@ -234,6 +234,7 @@ if (!empty($repeater_data)) : ?>
                 <div class="buttons flex gap-8 text mt-7 justify-center">
                     <button class="btn btn-secondary text-white next-step !px-[50px] relative service-selector" data-step="2" data-service="moving">I Need a Moving</button>
                     <button class="btn btn-secondary text-white next-step !px-[50px] relative service-selector" data-step="3" data-service="cleaning">I Need a Cleaning</button>
+                    <button class="btn btn-secondary text-white !px-[50px] relative" id="send-moving-quote">Send</button>
                 </div>
             </div>
             <div class="step" id="step2">
