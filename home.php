@@ -234,7 +234,6 @@ if (!empty($repeater_data)) : ?>
                 <div class="buttons flex gap-8 text mt-7 justify-center">
                     <button class="btn btn-secondary text-white next-step !px-[50px] relative service-selector" data-step="2" data-service="moving">I Need a Moving</button>
                     <button class="btn btn-secondary text-white next-step !px-[50px] relative service-selector" data-step="3" data-service="cleaning">I Need a Cleaning</button>
-                    <button class="btn btn-secondary text-white !px-[50px] relative" id="send-moving-quote">Send</button>
                 </div>
             </div>
             <div class="step" id="step2">
@@ -271,12 +270,12 @@ if (!empty($repeater_data)) : ?>
                     </div>
                 </div>
 
-                <a id="more-options" href="<?php echo get_page_by_template("form-template.php")[0]->guid ?>" class="next-btn !text-2xl font-bold mt-9">
+                <div id="quote-step-one"  class="next-btn !text-2xl font-bold mt-9 cursor-pointer">
                     <span>Next</span>
                     <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12.7159 3.51593C13.0034 3.22847 13.3933 3.06699 13.7999 3.06699C14.2065 3.06699 14.5965 3.22847 14.884 3.51593L21.784 10.4159C22.0715 10.7035 22.2329 11.0934 22.2329 11.5C22.2329 11.9066 22.0715 12.2965 21.784 12.5841L14.884 19.4841C14.5948 19.7634 14.2075 19.9179 13.8055 19.9144C13.4034 19.9109 13.0188 19.7497 12.7345 19.4654C12.4503 19.1811 12.289 18.7965 12.2855 18.3945C12.282 17.9924 12.4366 17.6051 12.7159 17.3159L16.8666 13.0333H2.29993C1.89327 13.0333 1.50326 12.8718 1.2157 12.5842C0.928149 12.2967 0.766602 11.9067 0.766602 11.5C0.766602 11.0933 0.928149 10.7033 1.2157 10.4158C1.50326 10.1282 1.89327 9.96666 2.29993 9.96666H16.8666L12.7159 5.68406C12.4284 5.39652 12.2669 5.00658 12.2669 4.59999C12.2669 4.19341 12.4284 3.80347 12.7159 3.51593Z" fill="#2F4C94" />
                     </svg>
-                </a>
+                </div>
             </div>
         </div>
 
@@ -296,7 +295,7 @@ if (!empty($repeater_data)) : ?>
         serverSelector.forEach(selector => {
             selector.addEventListener('click', () => {
                 serviceType = selector.dataset.service
-                if(serviceType == "cleaning"){
+                if (serviceType == "cleaning") {
                     document.querySelector('.contact-details #name-label').textContent = "Name"
                 }
             })
@@ -304,20 +303,22 @@ if (!empty($repeater_data)) : ?>
         propertyTypeSelector.forEach(selector => {
             selector.addEventListener('click', () => {
                 propertyType = selector.dataset.propertyType
-                if(propertyType == "business"){
+                if (propertyType == "business") {
                     document.querySelector('.contact-details #name-label').textContent = "Company name *"
                 }
-                if(propertyType == "individual-home"){
+                if (propertyType == "individual-home") {
                     document.querySelector('.contact-details #name-label').textContent = "Name"
                 }
             })
         });
 
-        const moreOptions = document.querySelector("#more-options");
+        const moreOptions = document.querySelector("#quote-step-one");
         if (moreOptions !== null) {
             // check if form inputs are not empty before moving to next page
             moreOptions.addEventListener('click', (e) => {
                 //e.preventDefault()
+                // send email and then redirect to next step
+                // or send the email when the next page loads
                 contactInfos.email = document.querySelector('input#email').value
                 contactInfos.name = document.querySelector('input#name').value
                 contactInfos.phone = document.querySelector('input#phone').value
@@ -330,6 +331,21 @@ if (!empty($repeater_data)) : ?>
                     contactInfos: contactInfos
                 }
                 sessionStorage.setItem("clientInfos", JSON.stringify(clientInfos));
+
+                jQuery.ajax({
+                    url: ajaxurl,
+                    type: "POST",
+                    data: {
+                        action: "send_moving_quote_step_one_action",
+                        //nonce: my_ajax_object.nonce,
+                        clientInfos: clientInfos,
+                    },
+                    success: function(response) {
+                        console.log("Server response:", response);
+                        window.location.href = "<?php echo get_page_by_template("form-template.php")[0]->guid; ?>";
+                    },
+                });
+                
             })
 
         }
@@ -344,7 +360,7 @@ if (!empty($repeater_data)) : ?>
                 const desiredService = nextStepBtn.dataset.service
 
                 if (desiredService == "cleaning") {
-                    
+
                 }
 
                 const currentEl = document.getElementById('step' + currentStep);

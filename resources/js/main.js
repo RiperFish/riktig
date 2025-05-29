@@ -26,7 +26,6 @@ document.querySelectorAll(".accordion-toggle").forEach((button) => {
   });
 });
 
-  console.log("dsfgsdg");
 jQuery(document).ready(function ($) {
   const sendMovingQuote = document.querySelector("#send-moving-quote");
   let ajaxUrl = "";
@@ -44,7 +43,6 @@ jQuery(document).ready(function ($) {
   }
 
   let clientInfos = JSON.parse(sessionStorage.getItem('clientInfos'))
-  console.log(clientInfos['serviceType']);
   
   if(clientInfos['serviceType'] == "moving"){
     const selectedItems = JSON.parse(sessionStorage.getItem('itemsData'))
@@ -53,12 +51,7 @@ jQuery(document).ready(function ($) {
     emailObject.itemsData.push(selectedItems)
     emailObject.volume.push(volume)
   }
-
-  console.log(emailObject);
-  
-  
-  
-  
+    
   if (sendMovingQuote !== null) {
     sendMovingQuote.addEventListener("click", () => {
       $.ajax({

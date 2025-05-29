@@ -42,6 +42,7 @@
     <?php } else {; ?>
         <script type="text/javascript">
             var devMode = "production"
+            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
         </script>
     <?php } ?>
 </head>

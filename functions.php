@@ -70,9 +70,136 @@ add_action('wp_enqueue_scripts', 'rikti_enqueue_assets');
 add_filter('wpcf7_autop_or_not', '__return_false');
 //include get_template_directory() . '/resources/views/layouts/main.php';
 
+function render_item_block($id, $volume, $image_url, $label)
+{
+    echo '
+    <div class="flex gap-4 item w-fit" data-id="' . htmlspecialchars($id) . '" data-volume="' . htmlspecialchars($volume) . '">
+        <div class="flex items-center gap-2.5">
+            <button class="bg-[#F8F8F8] w-[25px] h-[25px] rounded-2xl text-lg text-[#474747] font-bold flex items-center justify-center border border-[#CDD5EA] cursor-pointer" onclick="changeQty(this, -1)">-</button>
+            <span class="qty text-lg text-[#474747] mt-[1px] w-[23px] text-center">0</span>
+            <button class="bg-[#34A853] w-[25px] h-[25px] rounded-2xl text-lg text-white font-bold flex items-center justify-center cursor-pointer" onclick="changeQty(this, 1)">+</button>
+        </div>
+        <div class="flex items-center gap-3">
+            <div style="width:40px;display: flex;justify-content: center;align-items: center;"><img src="' . htmlspecialchars($image_url) . '"></div>
+            <span class="text-[#474747] text-lg">' . htmlspecialchars($label) . '</span>
+        </div>
+    </div>';
+}
+
+function get_page_by_template($template)
+{
+    $args = array(
+        'meta_key' => '_wp_page_template',
+        'meta_value' => "templates/{$template}",
+    );
+    return get_pages($args);
+}
+
+/* SEND QUOTE EMAIL : STEP 1 */
+add_action('wp_ajax_send_moving_quote_step_one_action', 'send_moving_quote_step_one_callback');
+add_action('wp_ajax_nopriv_send_moving_quote_step_one_action', 'send_moving_quote_step_one_callback'); // for non-logged-in users
+function send_moving_quote_step_one_callback()
+{
+    $client_infos = $_POST['clientInfos'];
+    // wp_send_json_success(['received' => $client_infos]);
+    //$logo_url = 'https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; // Replace with your logo
+    $body = '
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="' . $logo_url . '" alt="Logo" style="max-height: 60px;">
+        </div>
+
+        <h2 style="margin-bottom: 10px;">Client contact infos</h2>
+        <p><strong>Service:</strong> ' . ucfirst($client_infos['serviceType']) . '</p>
+        <p><strong>Property Type:</strong> ' . ucfirst($client_infos['propertyType']) . '</p>
+        <p><strong>Email:</strong> ' . htmlspecialchars($client_infos['contactInfos']['email']) . '</p>
+        <p><strong>Name:</strong> ' . htmlspecialchars($client_infos['contactInfos']['name']) . '</p>
+        <p><strong>Phone:</strong> ' . htmlspecialchars($client_infos['contactInfos']['phone']) . '</p>
+    </div>
+    ';
+    add_filter('wp_mail_content_type', function () {
+        return "text/html";
+    });
+    add_filter('wp_mail_from_name', function () {
+        return get_bloginfo('name'); // or a custom name like 'My Moving Company'
+    });
+    add_filter('wp_mail_from', function () {
+        return 'no-reply@yourdomain.com'; // Use a domain-matching email
+    });
+
+    $headers[] = 'From: Me Myself <me@example.net>';
+    $sent = wp_mail('mustadev.com@gmail.com', 'Price quote - step 1 from ' . $client_infos['contactInfos']['name'], $body);
+    remove_filter('wp_mail_content_type', 'set_html_content_type');
+}
+
+/* SEND QUOTE EMAIL : STEP 2 */
+add_action('wp_ajax_send_moving_quote_step_two_action', 'send_moving_quote_step_two_callback');
+add_action('wp_ajax_nopriv_send_moving_quote_step_two_action', 'send_moving_quote_step_two_callback'); // for non-logged-in users
+function send_moving_quote_step_two_callback()
+{
+    $client_infos = $_POST['clientInfos'];
+    $items_data = $_POST['itemsData'];
+    $body = '
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="' . $logo_url . '" alt="Logo" style="max-height: 60px;">
+        </div>
+
+        <h2 style="margin-bottom: 10px;">Things to move</h2>
+
+        <table cellspacing="0" cellpadding="8" border="1" style="border-collapse: collapse; width: 100%; margin-top: 10px;">
+                <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th align="left">Item</th>
+                    <th align="right">Qty</th>
+                    <th align="right">Vol (m³)</th>
+                    <th align="right">Total Vol</th>
+                </tr>
+                </thead>
+                <tbody>';
+
+        $totalVolume = 0;
+        foreach ($items_data as $id => $item) {
+            $qty = (int) $item['quantity'];
+            $vol = (float) $item['volumePerItem'];
+            $total = round($qty * $vol, 2);
+            $totalVolume += $total;
+
+            $body .= "<tr>
+                <td>" . ucfirst($id) . "</td>
+                <td align='right'>{$qty}</td>
+                <td align='right'>{$vol}</td>
+                <td align='right'>{$total}</td>
+            </tr>";
+        }
+
+        $body .= "<tr style='font-weight: bold; background-color: #fafafa;'>
+                <td colspan='3' align='right'>Total Volume:</td>
+                <td align='right'>" . round($totalVolume, 2) . " m³</td>
+            </tr>";
+
+    $body .= '</tbody></table></div>';
+
+    add_filter('wp_mail_content_type', function () {
+        return "text/html";
+    });
+    add_filter('wp_mail_from_name', function () {
+        return get_bloginfo('name'); // or a custom name like 'My Moving Company'
+    });
+    add_filter('wp_mail_from', function () {
+        return 'no-reply@yourdomain.com'; // Use a domain-matching email
+    });
+
+    //$headers[] = 'From: Me Myself <me@example.net>';
+    $sent = wp_mail('mustadev.com@gmail.com', 'Price quote - step 2 from ' . $client_infos['contactInfos']['name'], $body);
+    remove_filter('wp_mail_content_type', 'set_html_content_type');
+}
+
+
+
+
 add_action('wp_ajax_send_moving_quote_action', 'send_moving_quote_callback');
 add_action('wp_ajax_nopriv_send_moving_quote_action', 'send_moving_quote_callback'); // for non-logged-in users
-
 function send_moving_quote_callback()
 {
     $logo_url = 'https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; // Replace with your logo
@@ -139,7 +266,7 @@ function send_moving_quote_callback()
     add_filter('wp_mail_content_type', function () {
         return "text/html";
     });
-    $sent = wp_mail('mouss@4444.lt', 'New Request from ' . $user['name'], $body);
+    $sent = wp_mail('mustadev.com@gmail.com', 'New Request from ' . $user['name'], $body);
     remove_filter('wp_mail_content_type', 'set_html_content_type');
     //check_ajax_referer('my_nonce', 'nonce');
 
@@ -150,30 +277,4 @@ function send_moving_quote_callback()
         echo 'Failed to send email.';
     }
     //wp_send_json_success(['received' => $_POST['message']]);
-}
-
-
-function render_item_block($id, $volume, $image_url, $label)
-{
-    echo '
-    <div class="flex gap-4 item w-fit" data-id="' . htmlspecialchars($id) . '" data-volume="' . htmlspecialchars($volume) . '">
-        <div class="flex items-center gap-2.5">
-            <button class="bg-[#F8F8F8] w-[25px] h-[25px] rounded-2xl text-lg text-[#474747] font-bold flex items-center justify-center border border-[#CDD5EA] cursor-pointer" onclick="changeQty(this, -1)">-</button>
-            <span class="qty text-lg text-[#474747] mt-[1px] w-[23px] text-center">0</span>
-            <button class="bg-[#34A853] w-[25px] h-[25px] rounded-2xl text-lg text-white font-bold flex items-center justify-center cursor-pointer" onclick="changeQty(this, 1)">+</button>
-        </div>
-        <div class="flex items-center gap-3">
-            <div style="width:40px;display: flex;justify-content: center;align-items: center;"><img src="' . htmlspecialchars($image_url) . '"></div>
-            <span class="text-[#474747] text-lg">' . htmlspecialchars($label) . '</span>
-        </div>
-    </div>';
-}
-
-function get_page_by_template($template)
-{
-    $args = array(
-        'meta_key' => '_wp_page_template',
-        'meta_value' => "templates/{$template}",
-    );
-    return get_pages($args);
 }

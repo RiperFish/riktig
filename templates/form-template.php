@@ -44,6 +44,7 @@
     <?php } else {; ?>
         <script type="text/javascript">
             var devMode = "production"
+            var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
         </script>
     <?php } ?>
 </head>
@@ -218,7 +219,7 @@
                     </div>
                     <div class="bg-[#F7F7E0] px-10 py-5 rounded-[5px] flex justify-between items-center w-full">
                         <div></div>
-                        <div class=" text-2xl text-[#3D3D3D] font-bold">Volume: <span id="totalVolume">0</span></div>
+                        <div class=" text-2xl text-[#3D3D3D] font-bold">Volume: <span id="totalVolume">0</span> m³</div>
                         <style>
                             .next-btn {
                                 color: white;
@@ -248,44 +249,46 @@
                             <h4 class="mb-5">Moving from</h4>
                             <div class="mb-5">
                                 <label for="" class="text-lg text-[#474747] mb-1">Address</label>
-                                <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-address">
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Postal code</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-postal-code">
                                 </div>
                                 <div class=" flex-1">
-                                    <label for="" class="text-lg text-[#474747] mb-1">Postal adress</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <label for="" class="text-lg text-[#474747] mb-1">Postal address</label>
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-postal-address">
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5 items-center ">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Building type</label>
-                                    <select name="" id="" class="w-full border border-[#CDCDCD] rounded-[3px]">
-                                        <option value="Home">Home</option>
+                                    <select id="moving-from-building-type" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                        <option value="home1">Home 1</option>
+                                        <option value="home2">Home 2</option>
+                                        <option value="home3">Home 3</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-1 items-center gap-[14px] h-full mt-6">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="moving-from-elevator">
                                     <label for="" class="text-lg text-[#474747]">Elevator</label>
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Floor</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-floor">
                                 </div>
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Area</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-area">
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Carrying distance</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-from-carry-distance">
                                 </div>
                                 <div class="flex-1">
                                 </div>
@@ -296,44 +299,46 @@
                             <h4 class="mb-5">Moving to</h4>
                             <div class="mb-5">
                                 <label for="" class="text-lg text-[#474747] mb-1">Address</label>
-                                <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-address">
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Postal code</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-postal-code">
                                 </div>
                                 <div class="flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Postal adress</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-postal-address">
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5 items-center ">
                                 <div class="flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Building type</label>
-                                    <select name="" id="" class="w-full border border-[#CDCDCD] rounded-[3px]">
-                                        <option value="Home">Home</option>
+                                    <select id="moving-to-building-type" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                        <option value="home1">Home 1</option>
+                                        <option value="home2">Home 2</option>
+                                        <option value="home3">Home 3</option>
                                     </select>
                                 </div>
                                 <div class="flex flex-1 items-center gap-[14px] h-full mt-6">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="moving-to-elevator">
                                     <label for="" class="text-lg text-[#474747]">Elevator</label>
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Floor</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-floor">
                                 </div>
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Area</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-area">
                                 </div>
                             </div>
                             <div class="flex gap-[30px] mb-5">
                                 <div class=" flex-1">
                                     <label for="" class="text-lg text-[#474747] mb-1">Carrying distance</label>
-                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]">
+                                    <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]" id="moving-to-carry-distance">
                                 </div>
                                 <div class="flex-1">
                                 </div>
@@ -386,7 +391,7 @@
                     <div class="bg-[#F7F7E0] px-10 py-5 rounded-[5px] flex justify-between items-center mt-[30px] relative w-full">
                         <div></div>
                         <div class="text-2xl text-[#3D3D3D] font-bold absolute left-1/2 -translate-x-1/2">You are only one click away!</div>
-                        <button id="send-moving-quote" class="cursor-pointer next-btn !text-2xl font-bold">
+                        <button onclick="submitMovingForm()" id="send-moving-quote" class="cursor-pointer next-btn !text-2xl font-bold">
                             <span>Submit</span>
                             <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.7159 3.51593C13.0034 3.22847 13.3933 3.06699 13.7999 3.06699C14.2065 3.06699 14.5965 3.22847 14.884 3.51593L21.784 10.4159C22.0715 10.7035 22.2329 11.0934 22.2329 11.5C22.2329 11.9066 22.0715 12.2965 21.784 12.5841L14.884 19.4841C14.5948 19.7634 14.2075 19.9179 13.8055 19.9144C13.4034 19.9109 13.0188 19.7497 12.7345 19.4654C12.4503 19.1811 12.289 18.7965 12.2855 18.3945C12.282 17.9924 12.4366 17.6051 12.7159 17.3159L16.8666 13.0333H2.29993C1.89327 13.0333 1.50326 12.8718 1.2157 12.5842C0.928149 12.2967 0.766602 11.9067 0.766602 11.5C0.766602 11.0933 0.928149 10.7033 1.2157 10.4158C1.50326 10.1282 1.89327 9.96666 2.29993 9.96666H16.8666L12.7159 5.68406C12.4284 5.39652 12.2669 5.00658 12.2669 4.59999C12.2669 4.19341 12.4284 3.80347 12.7159 3.51593Z" fill="white" />
@@ -474,7 +479,7 @@
                     total += qty * vol;
                 });
                 total = Math.round(total * 100) / 100;
-                document.getElementById('totalVolume').textContent = total + " m³";
+                document.getElementById('totalVolume').textContent = total;
             }
 
 
@@ -483,31 +488,76 @@
                 document.getElementById('step2').classList.add('active');
 
                 const items = document.querySelectorAll(".item");
-                let data = {};
+                let itemsData = {};
 
                 items.forEach((item) => {
                     const id = item.dataset.id;
                     const volume = parseFloat(item.dataset.volume);
                     const qty = parseInt(item.querySelector(".qty").textContent);
                     if (qty > 0) {
-                        data[id] = {
+                        itemsData[id] = {
                             quantity: qty,
                             volumePerItem: volume,
                             totalVolume: Math.round(qty * volume * 100) / 100,
                         };
                     }
                 });
-                console.log(data);
                 // Store in sessionStorage (client-side)
-                sessionStorage.setItem("itemsData", JSON.stringify(data));
+                sessionStorage.setItem("itemsData", JSON.stringify(itemsData));
                 const stepperStep2 = document.querySelector('#stepper-step2')
                 const stepperStep3 = document.querySelector('#stepper-step3')
 
+                const finalVolume = document.querySelector('#totalVolume').textContent
+
+                if (finalVolume > 0) {
+                    const clientInfos = JSON.parse(sessionStorage.getItem('clientInfos'))
+
+                    jQuery.ajax({
+                        url: ajaxurl,
+                        type: "POST",
+                        data: {
+                            action: "send_moving_quote_step_two_action",
+                            //nonce: my_ajax_object.nonce,
+                            clientInfos: clientInfos,
+                            itemsData: itemsData,
+                        },
+                        success: function(response) {
+                            console.log("Server response:", response);
+                        },
+                    });
+                }
                 stepperStep2.classList.remove('active')
                 stepperStep2.classList.add('finished')
-
                 stepperStep3.classList.add('active')
                 stepperStep3.classList.remove('next')
+            }
+
+            function submitMovingForm() {
+                const clientInfos = JSON.parse(sessionStorage.getItem('clientInfos'))
+                const itemsData = JSON.parse(sessionStorage.getItem('itemsData'))
+                const movingFrom = {
+                    address: document.querySelector('#moving-from-address').value,
+                    postalcode: document.querySelector('#moving-from-postal-code').value,
+                    postaladdress: document.querySelector('#moving-from-postal-address').value,
+                    buildingtype: document.querySelector('#moving-from-building-type').value,
+                    elevator: document.querySelector('#moving-from-elevator').checked,
+                    floor: document.querySelector('#moving-from-floor').value,
+                    area: document.querySelector('#moving-from-area').value,
+                    carrydistance: document.querySelector('#moving-from-carry-distance').value,
+                }
+                const movingTo = {
+                    address: document.querySelector('#moving-to-address').value,
+                    postalcode: document.querySelector('#moving-to-postal-code').value,
+                    postaladdress: document.querySelector('#moving-to-postal-address').value,
+                    buildingtype: document.querySelector('#moving-to-building-type').value,
+                    elevator: document.querySelector('#moving-to-elevator').checked,
+                    floor: document.querySelector('#moving-to-floor').value,
+                    area: document.querySelector('#moving-to-area').value,
+                    carrydistance: document.querySelector('#moving-to-carry-distance').value,
+                }
+
+                console.log(movingFrom);
+                
             }
         </script>
         <?php get_footer(); ?>
