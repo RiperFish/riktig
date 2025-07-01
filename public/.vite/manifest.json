@@ -1,16 +1,16 @@
 {
   "resources/css/style.css": {
-    "file": "assets/style-ByecHPGD.css",
+    "file": "assets/style-ByeeLXHP.css",
     "src": "resources/css/style.css",
     "isEntry": true
   },
   "resources/js/main.js": {
-    "file": "assets/main-IysgMEo0.js",
+    "file": "assets/main-DLL8XK83.js",
     "name": "main",
     "src": "resources/js/main.js",
     "isEntry": true,
     "css": [
-      "assets/style-ByecHPGD.css"
+      "assets/style-ByeeLXHP.css"
     ]
   }
 }

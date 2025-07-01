@@ -14,9 +14,32 @@ function render_svg_stars($rating)
     return $out;
 }
 
+function render_item_block($id, $volume, $image_url, $label)
+{
+    echo '
+    <div class="flex gap-4 item w-fit" data-id="' . htmlspecialchars($id) . '" data-volume="' . htmlspecialchars($volume) . '">
+        <div class="flex items-center gap-2.5">
+            <button class="bg-[#F8F8F8] w-[25px] h-[25px] rounded-2xl text-lg text-[#474747] font-bold flex items-center justify-center border border-[#CDD5EA] cursor-pointer" onclick="changeQty(this, -1)">-</button>
+            <span class="qty text-base md:text-lg text-[#474747] mt-[1px] w-[23px] text-center">0</span>
+            <button class="bg-[#34A853] w-[25px] h-[25px] rounded-2xl text-lg text-white font-bold flex items-center justify-center cursor-pointer" onclick="changeQty(this, 1)">+</button>
+        </div>
+        <div class="flex items-center gap-3">
+            <div style="width:40px;display: flex;justify-content: center;align-items: center;"><img src="' . htmlspecialchars($image_url) . '"></div>
+            <span class="text-[#474747] text-base md:text-lg">' . htmlspecialchars($label) . '</span>
+        </div>
+    </div>';
+}
 
+function get_page_by_template($template)
+{
+    $args = array(
+        'meta_key' => '_wp_page_template',
+        'meta_value' => "templates/{$template}",
+    );
+    return get_pages($args);
+}
 
-add_action('add_meta_boxes', function () {
+/* add_action('add_meta_boxes', function () {
     global $post;
 
     if (!is_object($post)) return;
@@ -27,9 +50,9 @@ add_action('add_meta_boxes', function () {
     if ($template === 'home.php') {
         add_meta_box('custom_repeater', 'Custom Repeater', 'custom_repeater_meta_box', 'page');
     }
-});
+}); */
 
-function custom_repeater_meta_box($post)
+/* function custom_repeater_meta_box($post)
 {
     $value = get_post_meta($post->ID, 'custom_repeater_field', true);
     $rows = is_array($value) ? $value : [];
@@ -120,8 +143,8 @@ function custom_repeater_meta_box($post)
     </style>
 <?php
 }
-
-add_action('save_post', function ($post_id) {
+ */
+/* add_action('save_post', function ($post_id) {
     if (!isset($_POST['custom_repeater_nonce']) || !wp_verify_nonce($_POST['custom_repeater_nonce'], 'save_custom_repeater')) return;
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
     if (!current_user_can('edit_post', $post_id)) return;
@@ -155,5 +178,5 @@ add_shortcode('custom_repeater_display', function () {
     }
     echo '</div>';
     return ob_get_clean();
-});
+}); */
 

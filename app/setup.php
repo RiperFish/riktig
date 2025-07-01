@@ -27,6 +27,10 @@ add_action('admin_init', function () {
     // List of templates where you want to remove the editor
     $templates_to_disable_editor = [
         'home.php',
+        'templates/moving-service-template.php',
+        'templates/cleaning-service-template.php',
+        'templates/about-us-template.php',
+        'templates/contact-template.php',
     ];
 
     if (in_array($template, $templates_to_disable_editor)) {

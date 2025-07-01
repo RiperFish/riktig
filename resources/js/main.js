@@ -1,7 +1,7 @@
 import "../css/style.css";
-console.log("✅ Vite is working!");
 
 document.querySelectorAll(".accordion-toggle").forEach((button) => {
+  if (!button) return;
   button.addEventListener("click", () => {
     document.querySelectorAll(".accordion-content").forEach((c) => {
       c.classList.add("max-h-0");
@@ -27,7 +27,17 @@ document.querySelectorAll(".accordion-toggle").forEach((button) => {
 });
 
 jQuery(document).ready(function ($) {
-  const sendMovingQuote = document.querySelector("#send-moving-quote");
+  const header = document.querySelector("header");
+  const icon = document.querySelector(".mobile-menu-btn");
+  if (!icon) return;
+  const mobileMenu = document.querySelector("header #menu");
+  icon.addEventListener("click", (event) => {
+    icon.classList.toggle("open");
+    mobileMenu.classList.toggle("open");
+    header.classList.toggle("menu-opened");
+    //document.body.classList.toggle("no-scroll");
+  });
+
   let ajaxUrl = "";
   if (devMode == "staging") {
     ajaxUrl = ajaxurl;
@@ -36,38 +46,19 @@ jQuery(document).ready(function ($) {
   }
 
   let emailObject = {
-    clientInfos : [],
-    itemsData : [],
-    address : [],
-    volume:[]
-  }
+    clientInfos: [],
+    itemsData: [],
+    address: [],
+    volume: [],
+  };
 
-  let clientInfos = JSON.parse(sessionStorage.getItem('clientInfos'))
-  
-  if(clientInfos['serviceType'] == "moving"){
-    const selectedItems = JSON.parse(sessionStorage.getItem('itemsData'))
-    let volume = "50"
-    emailObject.clientInfos.push(clientInfos)
-    emailObject.itemsData.push(selectedItems)
-    emailObject.volume.push(volume)
-  }
-    
-  if (sendMovingQuote !== null) {
-    sendMovingQuote.addEventListener("click", () => {
-      $.ajax({
-        url: ajaxUrl,
-        type: "POST",
-        data: {
-          action: "send_moving_quote_action",
-          //nonce: my_ajax_object.nonce,
-          message: "Hello from JS",
-        },
-        success: function (response) {
-          console.log("Server response:", response);
-        },
-      });
-    });
-  }
+  window.addEventListener("scroll", () => {
+    const header = document.querySelector("header .header-content");
+    if (window.scrollY > 20) {
+      header.classList.add("shrink");
+    } else {
+      header.classList.remove("shrink");
+    }
+  });
 });
 
-function sendEmail() {}
