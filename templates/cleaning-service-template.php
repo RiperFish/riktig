@@ -28,12 +28,14 @@
                     </p>
                 </div>
                 <div class="buttons flex gap-8 text">
-                    <a href="<?php echo home_url(); ?>/#get-quote" class="btn btn-secondary text-white">Get a Quote</a>
+                    <a href="<?php echo home_url(); ?>/#get-quote" class="btn btn-secondary text-white">Få
+                        pristilbud</a>
                 </div>
             </div>
             <div class="hero-img">
                 <?php if (get_field('hero_section')['hero_image']): ?>
-                    <img class="h-full" src="<?php echo get_field('hero_section')['hero_image']; ?>" alt="<?php bloginfo('name'); ?>" />
+                    <img class="h-full" src="<?php echo get_field('hero_section')['hero_image']; ?>"
+                        alt="<?php bloginfo('name'); ?>" />
                 <?php endif; ?>
             </div>
 
@@ -45,7 +47,7 @@
     <div class="container">
         <div class="flex flex-col lg:flex-row lg:gap-10 justify-between">
             <div class="max-w-[570px]">
-                <h4 class="max-w-[420px] mb-[26px]">Standard moving cleaning includes:</h4>
+                <h4 class="max-w-[420px] mb-[26px]">Standard flyttevask inkluderer:</h4>
                 <div class="template-more-content list-check">
                     <?php echo get_field('hero_section')['editor']; ?>
                     <!-- <ul>
@@ -57,13 +59,21 @@
                 </div>
 
             </div>
-            <div class="lg:max-w-[605px] bg-[#F4F7FF] border border-[#E7EBF6] md:rounded-[50px] -mx-4 md:mx-0 mt-4 px-4 md:px-11 pt-8 md:pt-14 pb-10">
-                <h4 class="mb-[14px]">Get a Quote</h4>
+            <div
+                class="lg:max-w-[605px] bg-[#F4F7FF] border border-[#E7EBF6] md:rounded-[50px] -mx-4 md:mx-0 mt-4 px-4 md:px-11 pt-8 md:pt-14 pb-10">
+                <h4 class="mb-[14px]">Få pristilbud</h4>
                 <?php echo do_shortcode('[contact-form-7 id="6f8552e" title="Cleaning quote form"]') ?>
             </div>
         </div>
 
     </div>
 </section>
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/sv.js"></script>
+<script>
+    flatpickr("#date", {
+        dateFormat: "d/m/Y",
+        locale: "sv"
+    });
+</script>
 <?php get_footer(); ?>

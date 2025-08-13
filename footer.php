@@ -48,7 +48,7 @@
     </div>
     <div class="bg-white">
         <div class="container py-[14px]">
-            <p class="text-[#878787] opacity-80 text-sm md:text-base">Riktig valg AS, <?php echo date("Y"); ?>, all rights reserved
+            <p class="text-[#878787] opacity-80 text-sm md:text-base">Riktig valg AS, <?php echo date("Y"); ?>, Alle rettigheter forbeholdt
             </p>
         </div>
 

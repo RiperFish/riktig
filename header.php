@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="scroll-smooth">
 
@@ -13,18 +14,24 @@
     <!-- <link rel="icon" href="<?php echo RIKTIG_THEME_URI . '/assets/favicon.ico'; ?>" sizes="32x32">
     <link rel="apple-touch-icon" href="<?php echo RIKTIG_THEME_URI . '/assets/apple-touch-icon.png'; ?>">
     <link rel="manifest" href="<?php echo RIKTIG_THEME_URI . '/assets/riktig.webmanifest'; ?>"> -->
-
     <title>
         <?php
-        //if (is_front_page()) {
-        //    bloginfo('name') . "ézzz";
-        //} elseif (is_tax('shop_category')) {
-        //    echo bloginfo('name') . " - " . get_queried_object()->name;
-        //} else {
-        //    echo bloginfo('name') . " - " . (" " . get_the_title());
-        //}
+        wp_title('|', true, 'right');
+        bloginfo('name');
         ?>
     </title>
+    <!-- <title>
+        <?php
+        if (is_front_page()) {
+            bloginfo('name') . "ézzz";
+        } elseif (is_tax('shop_category')) {
+            echo bloginfo('name') . " - " . get_queried_object()->name;
+        } else {
+            echo bloginfo('name') . " - " . (" " . get_the_title());
+        }
+        ?>
+    </title> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <?php
     $dev_mode = getenv('DEV_MODE');
     if ($dev_mode == "staging") {
@@ -51,7 +58,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-    <header class="sticky top-0 bg-white">
+    <header class="fixed top-0 bg-white">
         <?php
         $get_quote_link = "";
         if (is_page_template('templates/about-us-template.php') || is_page_template('templates/contact-template.php')) {
@@ -66,10 +73,11 @@
                     <img src="<?php echo URL_BASE; ?>/images/logo.svg" alt="<?php bloginfo('name'); ?>">
                 </a>
             </div>
-            <a href="#" class="gap-1.5 items-center h-[45px] w-fit text-sm font-medium hidden"
+            <a href="tel:<?php echo get_option('company_phone'); ?>"
+                class="gap-1.5 items-center h-[45px] w-fit text-sm font-medium hidden"
                 style="filter: brightness(0) invert(1);" id="phone-number">
                 <img src="<?php echo URL_BASE; ?>/images/phone-blue.svg" alt="<?php bloginfo('name'); ?>">
-                458-000-66
+                <?php echo get_option('company_phone'); ?>
             </a>
             <nav id="menu" class=" mr-9">
                 <?php
@@ -81,21 +89,21 @@
                 ?>
                 <li class="block md:hidden">
                     <a href="<?php echo $get_quote_link; ?>"
-                        class="btn btn-primary items-center w-fit h-[45px] quote-btn hidden ">Get a
-                        Quote
+                        class="btn btn-primary items-center w-fit h-[45px] quote-btn hidden ">Få pristilbud
                     </a>
                 </li>
 
             </nav>
             <div class="buttons flex items-center gap-4">
-                <a href="#" class="btn btn-secondary flex gap-1.5 items-center h-[45px]" id="call-btn">
+                <a href="tel:<?php echo get_option('company_phone'); ?>"
+                    class="btn btn-secondary flex gap-1.5 items-center h-[45px]" id="call-btn">
                     <img src="<?php echo URL_BASE; ?>/images/phone-blue.svg" alt="<?php bloginfo('name'); ?>">
-                    458-000-66
+                    <?php echo get_option('company_phone'); ?>
                 </a>
 
                 <a href="<?php echo $get_quote_link; ?>"
                     class="btn btn-primary flex items-center w-fit h-[45px] quote-btn">
-                    Get a Quote
+                    Få et tilbud
                 </a>
             </div>
 

@@ -17,7 +17,7 @@ function render_svg_stars($rating)
 function render_item_block($id, $volume, $image_url, $label)
 {
     echo '
-    <div class="flex gap-4 item w-fit" data-id="' . htmlspecialchars($id) . '" data-volume="' . htmlspecialchars($volume) . '">
+    <div class="flex gap-4 item w-fit" data-label="' . htmlspecialchars($label) . '" data-id="' . htmlspecialchars($id) . '" data-volume="' . htmlspecialchars($volume) . '">
         <div class="flex items-center gap-2.5">
             <button class="bg-[#F8F8F8] w-[25px] h-[25px] rounded-2xl text-lg text-[#474747] font-bold flex items-center justify-center border border-[#CDD5EA] cursor-pointer" onclick="changeQty(this, -1)">-</button>
             <span class="qty text-base md:text-lg text-[#474747] mt-[1px] w-[23px] text-center">0</span>

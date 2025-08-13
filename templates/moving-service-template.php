@@ -55,7 +55,7 @@
                     </p>
                 </div>
                 <div class="buttons flex gap-8 text">
-                    <a href="<?php echo home_url(); ?>/#get-quote" class="btn btn-secondary text-white">Get a Quote</a>
+                    <a href="<?php echo home_url(); ?>/#get-quote" class="btn btn-secondary text-white">Få pristilbud</a>
                 </div>
             </div>
             <div class="hero-img">
@@ -73,7 +73,7 @@
     <div class="container">
         <div class="flex flex-col lg:flex-row lg:gap-10 justify-between">
             <div class="lg:max-w-[570px]">
-                <h2 class="mb-[26px]">Packing tips</h2>
+                <h2 class="mb-[26px]">Tips om pakking</h2>
                 <div class="template-more-content list-normal">
                     <?php echo get_field('hero_section')['editor']; ?>
                 </div>

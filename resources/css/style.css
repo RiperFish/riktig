@@ -52,6 +52,10 @@ h4 {
   justify-content: center;
   /* padding-block: 11px 12px; */
   line-height: 23px;
+  transition: transform 0.3s ease;
+}
+.btn.clicked {
+  transform: translateY(1px);
 }
 .btn-primary {
   background-color: var(--clr-accent);
@@ -95,10 +99,15 @@ ul {
 .template-hero-section p {
   margin-bottom: 20px;
 }
-
+/* main {
+  padding-top: 125px;
+} */
 /*--------------------------*/
 /*--------- Hero ---------*/
 /*--------------------------*/
+.hero-section {
+  padding-top: 125px;
+}
 .hero-img {
   position: absolute;
   right: 0;
@@ -118,6 +127,7 @@ ul {
 .hero-img img {
   border-radius: 50px;
   object-fit: cover;
+  height: 100%;
 }
 /*--------------------------*/
 /*--------- Header ---------*/
@@ -125,16 +135,25 @@ ul {
 header {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
   z-index: 999;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 header ul {
   list-style-type: none;
   color: #474747;
 }
 .header-content {
+  /* transition: height 0.3s ease; */
+  /* padding: 28px 36px;
+  
+  will-change: padding; */
   transition: padding 0.3s ease;
+  /* padding: 28px 36px; */
 }
 .header-content.shrink {
   padding-block: 16px;
+  /*  height: 100px; */
 }
 /*--------------------------*/
 /*--------- HOME ---------*/
@@ -211,6 +230,7 @@ header ul {
   gap: 22px;
   padding-block: 12px 11px;
   padding-inline: 66px 34px;
+  height: unset;
 }
 .next-step:hover {
   background-color: white;
@@ -241,6 +261,9 @@ header ul {
 /*--------------------------*/
 /*--------- FORM ---------*/
 /*--------------------------*/
+.form-inner-content {
+  padding-top: 175px;
+}
 .page-template-form-template h2 {
   font-size: 46px;
   color: var(--clr-accent);
@@ -334,7 +357,6 @@ input[type="date"]:focus::-webkit-datetime-edit {
 }
 
 .ti-reviews-container .ti-profile-details .ti-name {
-  
 }
 @media (width <= 1440px) {
   .hero-img {
@@ -618,6 +640,9 @@ input[type="date"]:focus::-webkit-datetime-edit {
   section .section-left-container {
     max-width: 100% !important;
   }
+  .form-inner-content {
+    padding-top: 200px;
+  }
   .form-stepper .stepper.active svg {
     fill: #c3c3c3;
   }
@@ -714,6 +739,7 @@ input[type="date"]:focus::-webkit-datetime-edit {
   }
   section.hero-section {
     padding-block: 0;
+    padding-top: 80px;
   }
   .home .hero-section .text-container,
   .about-hero-section .text-container,
@@ -761,6 +787,9 @@ input[type="date"]:focus::-webkit-datetime-edit {
   }
   .get-quote .contact-details input {
     max-width: 100%;
+  }
+  .form-inner-content {
+    padding-top: 160px;
   }
   .form-row {
     flex-direction: column;

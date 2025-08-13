@@ -38,6 +38,19 @@ jQuery(document).ready(function ($) {
     //document.body.classList.toggle("no-scroll");
   });
 
+  const buttons = document.querySelectorAll(".btn");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.classList.add("clicked");
+
+      // Optional: remove class after short delay
+      setTimeout(() => {
+        btn.classList.remove("clicked");
+      }, 200);
+    });
+  });
+
   let ajaxUrl = "";
   if (devMode == "staging") {
     ajaxUrl = ajaxurl;
@@ -52,13 +65,30 @@ jQuery(document).ready(function ($) {
     volume: [],
   };
 
-  window.addEventListener("scroll", () => {
+  /*  window.addEventListener("scroll", () => {
     const header = document.querySelector("header .header-content");
     if (window.scrollY > 20) {
       header.classList.add("shrink");
     } else {
       header.classList.remove("shrink");
     }
-  });
-});
+  }); */
+  window.onscroll = function () {
+    scrollFunction();
+  };
 
+  function scrollFunction() {
+    window.requestAnimationFrame(() => {
+      const header = document.querySelector("header .header-content");
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (
+        document.body.scrollTop > 50 ||
+        document.documentElement.scrollTop > 50
+      ) {
+        header.classList.add("shrink");
+      } else {
+        header.classList.remove("shrink");
+      }
+    });
+  }
+});
