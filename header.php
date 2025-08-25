@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="scroll-smooth">
 
@@ -101,12 +100,60 @@
                     <?php echo get_option('company_phone'); ?>
                 </a>
 
-                <a href="<?php echo $get_quote_link; ?>"
-                    class="btn btn-primary flex items-center w-fit h-[45px] quote-btn">
+                <a href="<?php echo $get_quote_link; ?>" data-target="#get-quote" <?php //echo $get_quote_link; ?>
+                    class="btn btn-primary flex items-center w-fit h-[45px] quote-btn js-scroll-to">
                     Få et tilbud
                 </a>
             </div>
 
+            <!-- <script>
+                const HOME = new URL("<?php echo home_url('/'); ?>");
+                const onHome =
+                    location.pathname.replace(/\/+$/, "") === HOME.pathname.replace(/\/+$/, "");
+
+                // Click on the shared header button: <a class="js-scroll-to" data-target="#section-id">
+                document.addEventListener("click", function (e) {
+                    const a = e.target.closest("a.js-scroll-to");
+                    if (!a) return;
+
+                    const targetSel = a.getAttribute("data-target") || a.getAttribute("href");
+                    if (!targetSel || !targetSel.startsWith("#")) return; // let normal links pass
+
+                    //e.preventDefault();
+
+                    if (onHome) {
+                        //delayedScrollTo(targetSel);
+                        scrollNow(targetSel);
+                    } else {
+                        // go to homepage with hash; homepage will handle delayed scroll on load
+                        location.href = HOME + targetSel;
+                    }
+                });
+
+                // If we landed on homepage with a hash, delay then scroll
+                window.addEventListener("load", function () {
+                    if (onHome && location.hash) delayedScrollTo(location.hash);
+                });
+
+                function delayedScrollTo(hash) {
+                    setTimeout(() => {
+                        const el = document.querySelector(hash);
+                        if (!el) return;
+                        const root = document.scrollingElement || document.documentElement;
+                        window.scrollTo({ top: root.scrollHeight, behavior: "smooth" });
+                    }, 100);
+                }
+                function scrollNow(hash) {
+                    const el = document.querySelector(hash);
+                    if (!el) return;
+                    const root = document.documentElement;
+                    console.log(root.scrollHeight + 2500);
+
+                    window.scrollTo({ top: root.scrollHeight + 2500, behavior: "smooth" });
+                }
+ -->
+            </script>
+            <?php //echo $get_quote_link; ?>
         </div>
         <div class="icon mobile-menu-btn">
             <span></span>

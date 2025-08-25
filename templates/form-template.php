@@ -155,23 +155,23 @@
                         <?php
                         echo "<div class='grid gap-y-[18px]'>";
                         render_item_block('sofa', 3, URL_BASE . '/images/form-icons/sofa.svg', 'Sofa');
-                        render_item_block('coffee-table', 0.3, URL_BASE . '/images/form-icons/coffee-table.svg', 'Stuebord');
+                        render_item_block('coffee-table', 0.3, URL_BASE . '/images/form-icons/coffee-table.svg', 'Kaffe bord');
                         render_item_block('tv-bench', 0.6, URL_BASE . '/images/form-icons/tv-bench.svg', 'Tv benk');
                         render_item_block('tv', 0.5, URL_BASE . '/images/form-icons/tv.svg', 'TV');
-                        render_item_block('display-cabinet', 1.5, URL_BASE . '/images/form-icons/display-cabinet.svg', 'Vitrineskap');
-                        render_item_block('sideboard', 0.6, URL_BASE . '/images/form-icons/sideboard.svg', 'Skjenk');
+                        render_item_block('display-cabinet', 1.5, URL_BASE . '/images/form-icons/display-cabinet.svg', 'Høyt skap');
+                        render_item_block('sideboard', 0.6, URL_BASE . '/images/form-icons/sideboard.svg', 'Lav skap');
                         render_item_block('armchair', 0.6, URL_BASE . '/images/form-icons/arm-chair.svg', 'Lenestol');
-                        render_item_block('dining-table', 0.7, URL_BASE . '/images/form-icons/dining-table.svg', 'Spisebord');
+                        render_item_block('dining-table', 0.7, URL_BASE . '/images/form-icons/dining-table.svg', 'Møtebord');
                         render_item_block('chair', 0.3, URL_BASE . '/images/form-icons/chair.svg', 'Stol');
-                        render_item_block('bookshelf', 0.9, URL_BASE . '/images/form-icons/bookshelf.svg', 'Bokhylle');
+                        render_item_block('bookshelf', 0.9, URL_BASE . '/images/form-icons/bookshelf.svg', 'Hylle');
                         echo "</div>";
                         echo "<div class='grid gap-y-[18px]'>";
-                        render_item_block('desk', 0.8, URL_BASE . '/images/form-icons/desk.svg', 'Skrivebord');
+                        render_item_block('desk', 0.8, URL_BASE . '/images/form-icons/desk.svg', 'Kontorpult');
                         render_item_block('drawer-unit', 0.2, URL_BASE . '/images/form-icons/drawer-unit.svg', 'Skuffeseksjon');
                         render_item_block('double-bed', 1.2, URL_BASE . '/images/form-icons/double-bed.svg', 'Dobbelseng');
                         render_item_block('bed', 0.7, URL_BASE . '/images/form-icons/bed.svg', 'Seng');
                         render_item_block('nightstand', 0.2, URL_BASE . '/images/form-icons/nightstand.svg', 'Nattbord');
-                        render_item_block('dresser', 2, URL_BASE . '/images/form-icons/dresser.svg', 'Kommode');
+                        render_item_block('dresser', 2, URL_BASE . '/images/form-icons/dresser.svg', 'Kontorskap (medium strl)');
                         render_item_block('garderobeskap', 0.8, URL_BASE . '/images/form-icons/garderobeskap.svg', 'Garderobeskap'); // need volume
                         render_item_block('garden-furniture', 2.5, URL_BASE . '/images/form-icons/garden-furniture.svg', 'Hagemøbler');
                         render_item_block('grill', 1, URL_BASE . '/images/form-icons/grill.svg', 'Grill');
@@ -240,33 +240,33 @@
                     <div class="mb-auto hidden md:grid-cols-2 lg:grid-cols-3 gap-y-[18px] w-full " id="businessItems">
                         <?php
                         echo "<div class='grid gap-y-[18px]'>";
-                        render_item_block('desk', 0.8, URL_BASE . '/images/form-icons/desk.svg', 'Skrivebord');
+                        render_item_block('desk', 0.8, URL_BASE . '/images/form-icons/desk.svg', 'Kontorpult');
                         render_item_block('office-chair', 0.8, URL_BASE . '/images/form-icons/office-chair.svg', 'Kontorstol');
                         render_item_block('drawer-unit', 0.2, URL_BASE . '/images/form-icons/drawer-unit.svg', 'Skuffeseksjon');
                         render_item_block('it', 0.2, URL_BASE . '/images/form-icons/it.svg', 'IT utstyr');
                         render_item_block('pc-screen', 0.2, URL_BASE . '/images/form-icons/pc-screen.svg', 'Pc skjermer');
-                        render_item_block('dining-table', 0.7, URL_BASE . '/images/form-icons/dining-table.svg', 'Spisebord');
+                        render_item_block('dining-table', 0.7, URL_BASE . '/images/form-icons/dining-table.svg', 'Møtebord');
                         render_item_block('chair', 0.3, URL_BASE . '/images/form-icons/chair.svg', 'Stol');
-                        render_item_block('display-cabinet', 1.5, URL_BASE . '/images/form-icons/display-cabinet.svg', 'Vitrineskap');
-                        render_item_block('sideboard', 0.6, URL_BASE . '/images/form-icons/sideboard.svg', 'Skjenk');
+                        render_item_block('display-cabinet', 1.5, URL_BASE . '/images/form-icons/display-cabinet.svg', 'Høyt skap');
+                        render_item_block('sideboard', 0.6, URL_BASE . '/images/form-icons/sideboard.svg', 'Lav skap');
                         echo "</div>";
                         echo "<div class='grid gap-y-[18px]'>";
-                        render_item_block('dresser', 2, URL_BASE . '/images/form-icons/dresser.svg', 'Kommode');
-                        render_item_block('bookshelf', 0.9, URL_BASE . '/images/form-icons/bookshelf.svg', 'Bokhylle');
+                        render_item_block('dresser', 2, URL_BASE . '/images/form-icons/dresser.svg', 'Kontorskap (medium strl)');
+                        render_item_block('bookshelf', 0.9, URL_BASE . '/images/form-icons/bookshelf.svg', 'Hylle');
                         render_item_block('tall-desk', 0.9, URL_BASE . '/images/form-icons/tall-desk.svg', 'Høyt bord');
                         render_item_block('sofa', 3, URL_BASE . '/images/form-icons/sofa.svg', 'Sofa');
                         render_item_block('armchair', 0.6, URL_BASE . '/images/form-icons/arm-chair.svg', 'Lenestol');
-                        render_item_block('coffee-table', 0.3, URL_BASE . '/images/form-icons/coffee-table.svg', 'Stuebord');
+                        render_item_block('coffee-table', 0.3, URL_BASE . '/images/form-icons/coffee-table.svg', 'Kaffe bord');
                         render_item_block('tv', 0.5, URL_BASE . '/images/form-icons/tv.svg', 'TV');
                         render_item_block('bilder', 0.5, URL_BASE . '/images/form-icons/bilder.svg', 'Bilder');
                         render_item_block('tavle', 0.5, URL_BASE . '/images/form-icons/tavle.svg', 'Tavle');
                         echo "</div>";
                         echo "<div class='grid gap-y-[18px]'>";
                         render_item_block('refrigerator', 1.2, URL_BASE . '/images/form-icons/refrigerator.svg', 'Kjøleskap');
-                        render_item_block('plantepott', 1.2, URL_BASE . '/images/form-icons/plant.svg', 'Plant pot');
-                        render_item_block('printer', 1.2, URL_BASE . '/images/form-icons/printer.svg', 'Skriver');
+                        render_item_block('plantepott', 1.2, URL_BASE . '/images/form-icons/plant.svg', 'Plantepott');
+                        render_item_block('printer', 1.2, URL_BASE . '/images/form-icons/printer.svg', 'Printer');
                         render_item_block('archive', 1.2, URL_BASE . '/images/form-icons/archive.svg', 'Arkivskap');
-                        render_item_block('safe', 1.2, URL_BASE . '/images/form-icons/safe.svg', 'Safe');
+                        render_item_block('safe', 100, URL_BASE . '/images/form-icons/safe.svg', 'Safe');
                         render_item_block('garden-furniture', 2.5, URL_BASE . '/images/form-icons/garden-furniture.svg', 'Hagemøbler');
                         render_item_block('stillepod', 2.5, URL_BASE . '/images/form-icons/stillepod.svg', 'Stillepod');
                         //render_item_block('moving-boxes', 0.1, URL_BASE . '/images/form-icons/moving-boxes.svg', 'Flyttekasser');
@@ -306,7 +306,8 @@
                     <div
                         class="bg-[#F7F7E0] px-10 py-8 md:py-5 rounded-[5px] flex flex-col gap-6 md:flex-row justify-between items-center w-full mt-24">
                         <div class="hidden lg:block"></div>
-                        <div class=" text-2xl text-[#3D3D3D] font-bold">Volum: <span id="totalVolume">0</span> m³</div>
+                        <div class=" text-2xl text-[#3D3D3D] font-bold">Volum: <span id="totalVolume">0</span> m³
+                        </div>
                         <style>
                             .next-btn {
                                 color: white;
@@ -346,7 +347,7 @@
                                         class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
                                         id="moving-from-address">
                                 </div>
-                                <div class="flex flex-col gap-5 md:gap-[30px] mb-5">
+                                <div class="flex flex-col lg:flex-row gap-[30px] mb-5">
                                     <div class=" flex-1">
                                         <label for=""
                                             class="text-base lg:text-lg text-[#474747] mb-1">Postnummer</label>
@@ -370,7 +371,7 @@
                                             class="w-full border border-[#CDCDCD] rounded-[3px]">
                                             <option value="Hus">Hus</option>
                                             <option value="Leilighet">Leilighet</option>
-                                            <option value="Rekkehus">Rekkehus</option>
+                                            <option value="Lager">Lager</option>
                                             <option value="Annet">Annet</option>
                                         </select>
                                     </div>
@@ -393,7 +394,8 @@
                                 </div>
                                 <div class="flex gap-[30px] mb-5">
                                     <div class=" flex-1">
-                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand (fra
+                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand
+                                            (fra
                                             dør til flyttebil)
                                         </label>
                                         <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]"
@@ -412,8 +414,8 @@
                                         class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
                                         id="moving-to-address">
                                 </div>
-                                <div class="flex flex-col gap-5 md:gap-[30px] mb-5">
-                                    <div class=" flex-1">
+                                <div class="flex flex-col lg:flex-row gap-[30px] mb-5">
+                                    <div class="flex-1">
                                         <label for=""
                                             class="text-base lg:text-lg text-[#474747] mb-1 ">Postnummer</label>
                                         <input type="text"
@@ -436,7 +438,7 @@
                                             class="w-full border border-[#CDCDCD] rounded-[3px]">
                                             <option value="Hus">Hus</option>
                                             <option value="Leilighet">Leilighet</option>
-                                            <option value="Rekkehus">Rekkehus</option>
+                                            <option value="Lager">Lager</option>
                                             <option value="Annet">Annet</option>
                                         </select>
                                     </div>
@@ -459,7 +461,8 @@
                                 </div>
                                 <div class="flex gap-[30px] mb-5">
                                     <div class=" flex-1">
-                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand (fra
+                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand
+                                            (fra
                                             dør til flyttebil)
                                         </label>
                                         <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]"
@@ -485,7 +488,8 @@
                                     </div>
                                     <div class="flex flex-1 items-center gap-[14px] h-full mt-6">
                                         <input type="checkbox" id="moving-flexible-date">
-                                        <label for="" class="text-base lg:text-lg text-[#474747]">Fleksibel dato</label>
+                                        <label for="" class="text-base lg:text-lg text-[#474747]">Fleksibel
+                                            dato</label>
                                     </div>
                                 </div>
                             </div>
@@ -514,7 +518,8 @@
                                 </div>
                             </div>
                             <div class="max-w-[512px]">
-                                <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Merknader (f.eks. tunge
+                                <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Merknader (f.eks.
+                                    tunge
                                     gjenstander)
                                 </label>
                                 <textarea name="" id="moving-notes"
@@ -534,6 +539,22 @@
                                         class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
                                         id="moving-from-address">
                                 </div>
+                                <div class="flex flex-col lg:flex-row gap-[30px] mb-5">
+                                    <div class="flex-1">
+                                        <label for=""
+                                            class="text-base lg:text-lg text-[#474747] mb-1 ">Postnummer</label>
+                                        <input type="text"
+                                            class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
+                                            id="moving-from-postal-code">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label for=""
+                                            class="text-base lg:text-lg text-[#474747] mb-1 ">Postadresse</label>
+                                        <input type="text"
+                                            class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
+                                            id="moving-from-postal-address">
+                                    </div>
+                                </div>
                                 <div class="flex flex-col lg:flex-row gap-5 md:gap-[30px] mb-5">
                                     <div class=" flex-1">
                                         <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Areal I
@@ -549,7 +570,8 @@
                                 </div>
                                 <div class="flex gap-[30px] mb-5 items-center ">
                                     <div class=" flex-1">
-                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand (fra
+                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand
+                                            (fra
                                             dør til flyttebil)</label>
                                         <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px] "
                                             id="moving-business-from-carry-distance">
@@ -569,6 +591,22 @@
                                         class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
                                         id="moving-to-address">
                                 </div>
+                                <div class="flex flex-col lg:flex-row gap-[30px] mb-5">
+                                    <div class="flex-1">
+                                        <label for=""
+                                            class="text-base lg:text-lg text-[#474747] mb-1 ">Postnummer</label>
+                                        <input type="text"
+                                            class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
+                                            id="moving-to-postal-code">
+                                    </div>
+                                    <div class="flex-1">
+                                        <label for=""
+                                            class="text-base lg:text-lg text-[#474747] mb-1 ">Postadresse</label>
+                                        <input type="text"
+                                            class="w-full border border-[#CDCDCD] rounded-[3px] moving-field-required"
+                                            id="moving-to-postal-address">
+                                    </div>
+                                </div>
                                 <div class="flex flex-col lg:flex-row gap-5 md:gap-[30px] mb-5">
                                     <div class=" flex-1">
                                         <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Areal I kvm
@@ -584,7 +622,8 @@
                                 </div>
                                 <div class="flex gap-[30px] mb-5 items-center ">
                                     <div class=" flex-1">
-                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand (fra
+                                        <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Bæreavstand
+                                            (fra
                                             dør til flyttebil)
                                         </label>
                                         <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]"
@@ -600,13 +639,15 @@
                         <div class="flex flex-col md:flex-row gap-[30px] md:items-center mb-5">
                             <div class="max-w-[550px] flex flex-col md:flex-row gap-[30px]">
                                 <div class=" flex-1">
-                                    <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Antall ansatte som
+                                    <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Antall ansatte
+                                        som
                                         skal flyttes</label>
                                     <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]"
                                         id="moving-business-employees">
                                 </div>
                                 <div class="flex-1">
-                                    <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Ønsket dato</label>
+                                    <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Ønsket
+                                        dato</label>
                                     <!-- <input type="date" class="w-full border border-[#CDCDCD] rounded-[3px]"
                                         id="moving-date"> -->
                                     <input type="text" class="w-full border border-[#CDCDCD] rounded-[3px]"
@@ -715,7 +756,8 @@
                         </div>
                         <div class="flex gap-[30px] mb-5">
                             <div class=" flex-1">
-                                <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Størrelse I kvm</label>
+                                <label for="" class="text-base lg:text-lg text-[#474747] mb-1">Størrelse I
+                                    kvm</label>
                                 <input type="text" id="cleaning-size"
                                     class="w-full border border-[#CDCDCD] rounded-[3px]">
                             </div>
@@ -979,7 +1021,7 @@
             function isValidAddress(addr) {
                 const trimmed = addr.trim();
                 //const re = /^[A-Za-z0-9\s\.,\-#]{3,}$/;
-                const re = /^[\p{L}\p{N}\s\.,\-#]{3,}$/u;
+                const re = /^[\p{L}\p{N}\s\.,\-#]{2,}$/u;
                 return re.test(trimmed);
             }
 
@@ -1113,6 +1155,8 @@
                     if (propertyType === 'business') {
                         initialMovingFrom = {
                             address: movingFromAddress.value,
+                            postalcode: movingFromPostalCode.value,
+                            postaladdress: movingFromPostalAddress.value,
                             area: document.querySelector('#moving-business-from-area').value,
                             floor: document.querySelector('#moving-business-from-floor').value,
                             carrydistance: document.querySelector('#moving-business-from-carry-distance').value,
@@ -1120,6 +1164,8 @@
                         }
                         initialMovingTo = {
                             address: movingToAddress.value,
+                            postalcode: movingToPostalCode.value,
+                            postaladdress: movingToPostalAddress.value,
                             area: document.querySelector('#moving-business-to-area').value,
                             floor: document.querySelector('#moving-business-to-floor').value,
                             carrydistance: document.querySelector('#moving-business-to-carry-distance').value,

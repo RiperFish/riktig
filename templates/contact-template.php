@@ -66,7 +66,7 @@
                     $title = esc_html($row['title'] ?? '');
                     $position = esc_html($row['position'] ?? '');
                     $phone_number = esc_html($row['phone_number'] ?? '');
-                    $image_url = wp_get_attachment_image_url(intval($row['image'] ?? 0), 'medium');
+                    $image_url = wp_get_attachment_image_url(intval($row['image'] ?? 0), 'full');
                     ?>
                     <div
                         class="team-member flex justify-end bg-[#F4F7FF] rounded-[20px] border border-[#E7EBF6] relative px-4 max-w-[420px] md:max-w-[393px] max-h-[218px] w-full h-full pt-11 pb-14">

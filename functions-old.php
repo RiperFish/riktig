@@ -69,8 +69,7 @@ function rikti_enqueue_assets()
     }
     wp_localize_script('rikti-js', 'my_ajax_object', [
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('my_nonce'),
-        'homeUrl' => home_url('/'),
+        'nonce' => wp_create_nonce('my_nonce')
     ]);
     wp_enqueue_script('jquery');
 }
@@ -108,7 +107,7 @@ function send_moving_quote_step_one_callback()
     // wp_send_json_success(['received' => $client_infos]);
     //$logo_url = 'https://images.pexels.com/photos/1337380/pexels-photo-1337380.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'; // Replace with your logo
     $body = '
-    <div style="font-family: Arial, sans-serif; color: #333;">
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
        
 
         <h2 style="margin-bottom: 10px;">Kundehenvendelse</h2>
@@ -147,7 +146,7 @@ function send_moving_quote_step_two_callback()
     $client_infos = $_POST['clientInfos'];
     $items_data = $_POST['itemsData'];
     $body = '
-    <div style="font-family: Arial, sans-serif; color: #333;">
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="' . $logo_url . '" alt="Logo" style="max-height: 60px;">
         </div>
@@ -231,30 +230,9 @@ function send_moving_quote_final_callback()
         $property_type_nor = "Bedrift";
     }
     //<p><strong>Service:</strong> ' . ucfirst($service_type_nor) . '</p>
-    $body = <<<HTML
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <meta charset="UTF-8">
-            <meta name="x-apple-disable-message-reformatting">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Client email</title>
-                <style>
-                    @media only screen and (max-width: 600px) {
-                        .column {
-                            display: block !important;
-                            width: 100% !important;
-                            box-sizing: border-box;
-                            margin-bottom: 12px !important;
-                        }
-                    }
-                </style>
-            </head>
-            <body>
-        HTML;
-    $body .= '
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 class="section-title" style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Kundehenvendelse</h2>
+    $body = '
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Kundehenvendelse</h2>
         <p><strong>Kundetype:</strong> ' . ucfirst($property_type_nor) . '</p>
         ';
     if ($property_type == "business") {
@@ -273,10 +251,17 @@ function send_moving_quote_final_callback()
     </div>
     ';
     $body .= '
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Flyttelista</h2>
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Flyttelista</h2>
 
-        <div>';
+        <table cellspacing="0" cellpadding="8" border="1" style="border-collapse: collapse; width: 100%;max-width:600px; margin-top: 10px;">
+                <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th align="left">Vare</th>
+                    <th align="right">Antall</th>
+                </tr>
+                </thead>
+                <tbody>';
 
     $totalVolume = 0;
     foreach ($items_data as $label => $item) {
@@ -286,121 +271,140 @@ function send_moving_quote_final_callback()
         $total = round($qty * $vol, 2);
         $totalVolume += $total;
 
-        $body .= "<div style='margin-right:10px;'>
-                <span>" . str_replace('-', ' ', ucfirst($label)) . " </span>
-                <span> {$qty}</span>
-            </div>";
+        $body .= "<tr>
+                <td>" . str_replace('-', ' ', ucfirst($label)) . "</td>
+                <td align='right'>{$qty}</td>
+            </tr>";
     }
 
-    $body .= '</div>
-                <div style="margin-bottom:5px;">
-                    <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                        <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Total volum: </span></b>
-                        <span>' . round($totalVolume, 2) . '</span>
-                    </p>
-                </div>
+    $body .= "<tr style='font-weight: bold; background-color: #fafafa;'>
+                <td align='right'>Total volum:</td>
+                <td align='right'>" . round($totalVolume, 2) . " m³</td>
+            </tr>";
 
-    </div>';
+    $body .= '</tbody></table></div>';
 
     if ($property_type == "business") {
         $body .= '
-    <div style="font-family: Arial, sans-serif; color: #333;margin-top:28px;"> 
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;margin-top:28px;"> 
         <table style="width:95%;">
             <tr>
-                <td class="column" align="left" style="width: 50%;padding-right: 30px;">
-                    <h4 style="font-size:18px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flytter fra</h4>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Adresse: </span></b>
-                            <span>' . htmlspecialchars($moving_from['address']) . '</span>
-                        </p>
+                <td align="left" style="width: 50%;padding-right: 30px;">
+                    <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flytter fra</h4>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Adresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_from['address']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postnummer: </span></b>
-                            <span>' . htmlspecialchars($moving_from['postalcode']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Areal I kvm</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_from['area']) . ' kvm">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Etasje</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_from['floor']) . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postadresse: </span></b>
-                            <span>' . htmlspecialchars($moving_from['postaladdress']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Areal I kvm: </span></b>
-                            <span>' . htmlspecialchars($moving_from['area']) . ' kvm</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Etasje: </span></b>
-                            <span>' . htmlspecialchars($moving_from['floor']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bæreavstand: </span></b>
-                            <span>' . htmlspecialchars($moving_from['carrydistance']) . ' meter</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Heis: </span></b>
-                            <span>' . ($moving_from['elevator'] == true ? "Ja" : "Nei") . '</span>
-                        </p>
+
+                    <div style="margin-bottom:20px;">
+                        <table>
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bæreavstand</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_from['carrydistance']) . ' meter">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Heis</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . ($moving_from['elevator'] == true ? "Ja" : "Nei") . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
 
-                <td class="column" align="right" style="width: 50%;padding-right: 30px;">
-                    <h4 style="font-size:18px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;text-align:left;">Flytter til</h4>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Adresse: </span></b>
-                            <span>' . htmlspecialchars($moving_to['address']) . '</span>
-                        </p>
+                <td align="right" style="width: 50%;padding-left: 30px;">
+                    <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;text-align:left;">Flytter til</h4>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Adresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_to['address']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postnummer: </span></b>
-                            <span>' . htmlspecialchars($moving_to['postalcode']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <table>
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Areal I kvm</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_to['area']) . ' kvm">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Etasje</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_to['floor']) . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postadresse: </span></b>
-                            <span>' . htmlspecialchars($moving_to['postaladdress']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Areal I kvm: </span></b>
-                            <span>' . htmlspecialchars($moving_to['area']) . ' kvm</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Etasje: </span></b>
-                            <span>' . htmlspecialchars($moving_to['floor']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bæreavstand: </span></b>
-                            <span>' . htmlspecialchars($moving_to['carrydistance']) . ' meter</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Heis: </span></b>
-                            <span>' . ($moving_to['elevator'] == true ? "Ja" : "Nei") . '</span>
-                        </p>
+
+                    <div style="margin-bottom:20px;">
+                        <table>
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bæreavstand</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_to['carrydistance']) . ' meter">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Heis</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . ($moving_to['elevator'] == true ? "Ja" : "Nei") . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
             </tr>
         </table>
-        <h2 class="section-title" style="font-size:18px;color:#2f4c94;margin-bottom: 4px;margin-top: 20px;">Flyttedetaljer</h2>
+        <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flyttedetaljer</h4>
         ';
         if (!empty($moving_details['employees'])) {
             $body .= '<p><strong>Antall ansatte som skal flyttes:</strong> ' . $moving_details['employees'] . '</p>';
@@ -437,118 +441,189 @@ function send_moving_quote_final_callback()
         $body .= '</div>';
     } elseif ($property_type == "individual-home") {
         $body .= '
-    <div style="font-family: Arial, sans-serif; color: #333;margin-top:28px;">
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;margin-top:28px;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Adresse</h2>
+
         <table style="width:95%;">
             <tr> 
-                <td class="column" align="left" style="width: 50%;padding-right: 30px;">
-                    <h4 style="font-size:18px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flytter fra</h4>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Adresse: </span></b>
-                            <span>' . htmlspecialchars($moving_from['address']) . '</span>
-                        </p>
+                <td align="left" style="width: 50%;padding-right: 30px;">
+                    <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flytter fra</h4>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Adresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_from['address']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postnummer: </span></b>
-                            <span>' . htmlspecialchars($moving_from['postalcode']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Postnummer</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_from['postalcode']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postadresse: </span></b>
-                            <span>' . htmlspecialchars($moving_from['postaladdress']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Postadresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_from['postaladdress']) . '">
                     </div>
+                    <div style="margin-bottom:20px;">
+                        <table>
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bygningstype</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_from['buildingtype']) . '">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Heis</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_from['elevator'] || $moving_from['elevator'] != '' ? "Ja" : "Nei") . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Etasje</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_from['floor']) . '">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Areal</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_from['area']) . ' kvm">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bæreavstand (fra dør til flyttebil)</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_from['carrydistance']) . ' meter">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
 
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bygningstype: </span></b>
-                            <span>' . htmlspecialchars($moving_from['buildingtype']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Heis: </span></b>
-                            <span>' . htmlspecialchars($moving_from['elevator'] || $moving_from['elevator'] != '' ? "Ja" : "Nei") . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Etasje: </span></b>
-                            <span>' . htmlspecialchars($moving_from['floor']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Areal: </span></b>
-                            <span>' . htmlspecialchars($moving_from['area']) . ' kvm</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bæreavstand (fra dør til flyttebil): </span></b>
-                            <span>' . htmlspecialchars($moving_from['carrydistance']) . ' meter</span>
-                        </p>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </td>
 
-                <td class="column" align="right" style="width: 50%;padding-right: 30px;">
-                    <h4 style="font-size:18px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;text-align:left;">Flytter til</h4>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Adresse: </span></b>
-                            <span>' . htmlspecialchars($moving_to['address']) . '</span>
-                        </p>
+                <td align="right" style="width: 50%;padding-left: 30px;">
+                    <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;text-align:left;">Flytter til</h4>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Adresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_to['address']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postnummer: </span></b>
-                            <span>' . htmlspecialchars($moving_to['postalcode']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Postnummer</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_to['postalcode']) . '">
                     </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Postadresse: </span></b>
-                            <span>' . htmlspecialchars($moving_to['postaladdress']) . '</span>
-                        </p>
+                    <div style="margin-bottom:20px;">
+                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;display:block;text-align:left;">Postadresse</label>
+                        <input type="text" disabled
+                            style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                            value="' . htmlspecialchars($moving_to['postaladdress']) . '">
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <table>
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bygningstype</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_to['buildingtype']) . '">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Heis</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;"
+                                            value="' . htmlspecialchars($moving_to['elevator'] || $moving_to['elevator'] != '' ? "Ja" : "Nei") . '">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Etasje</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_to['floor']) . '">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    <div>
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Areal</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_to['area']) . ' kvm">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="margin-bottom:20px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%;">
+                                    <div style="padding-right: 32px;">
+                                        <label for="" style="font-size:16px;color:#474747;margin-bottom:4px;">Bæreavstand (fra dør til flyttebil)</label>
+                                        <input type="text" disabled style="width:100%;border:1px solid #CDCDCD;border-radius:3px;height: 45px;color: black;font-size: 17px;padding-left: 16px;padding-right: 16px;" 
+                                            value="' . htmlspecialchars($moving_to['carrydistance']) . ' meter">
+                                    </div>
+                                </td>
+                                <td style="width: 20px; font-size: 0; line-height: 0;">
+                                    &nbsp;
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                        </table>
                     </div>
 
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bygningstype: </span></b>
-                            <span>' . htmlspecialchars($moving_to['buildingtype']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Heis: </span></b>
-                            <span>' . htmlspecialchars($moving_to['elevator'] || $moving_to['elevator'] != '' ? "Ja" : "Nei") . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Etasje: </span></b>
-                            <span>' . htmlspecialchars($moving_to['floor']) . '</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Areal: </span></b>
-                            <span>' . htmlspecialchars($moving_to['area']) . ' kvm</span>
-                        </p>
-                    </div>
-                    <div style="margin-bottom:5px;">
-                        <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                            <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Bæreavstand (fra dør til flyttebil): </span></b>
-                            <span>' . htmlspecialchars($moving_to['carrydistance']) . ' meter</span>
-                        </p>
-                    </div>
                 </td>
             </tr>
         </table>
 
-        <h2 style="font-size:18px;color:#2f4c94;margin-bottom: 4px;margin-top: 20px;">Flyttedetaljer</h2>
+        <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Flyttedetaljer</h4>
         ';
 
         if (!empty($moving_details['date'])) {
@@ -581,10 +656,6 @@ function send_moving_quote_final_callback()
             $body .= '<p>' . $moving_details['notes'] . '</p>';
         }
         $body .= '</div>';
-        $body .= <<<HTML
-        </body>
-        </html>
-        HTML;
     }
     add_filter('wp_mail_content_type', function () {
         return "text/html";
@@ -597,12 +668,7 @@ function send_moving_quote_final_callback()
     });
 
     $headers[] = 'From: Me Myself <me@example.net>';
-    $to = [
-        'mouss@4444.lt',
-        'eduardas@riktigflytting.no',
-        'dainius@4444.lt'
-    ];
-    $sent = wp_mail($to, 'Forespørsel på flytting', $body);
+    $sent = wp_mail('mouss@4444.lt', 'Price quote - final form from ' . $client_infos['contactInfos']['name'], $body);
     if ($sent) {
         echo 'Email sent successfully!';
         $wpdb->delete(
@@ -626,7 +692,7 @@ function send_cleaning_quote_final_action_callback()
     $cleaningFormData = $_POST['finalFormObject']['cleaningFormData'];
 
     //$body = '
-    //<div style="font-family: Arial, sans-serif; color: #333;">
+    //<div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
     //    <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Client contact infos</h2>
     //    <p><strong>Service:</strong> ' . ucfirst($client_infos['serviceType']) . '</p>
     //    <p><strong>Email:</strong> ' . htmlspecialchars($client_infos['contactInfos']['email']) . '</p>
@@ -642,16 +708,39 @@ function send_cleaning_quote_final_action_callback()
     //$body .= '</div>';
 
     $body = '
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Forespørsel på Flyttevask</h2>
-        <p><strong>Navn:</strong> ' . htmlspecialchars($client_infos['contactInfos']['name']) . '</p>
-        <p><strong>E-post adresse:</strong> ' . htmlspecialchars($client_infos['contactInfos']['email']) . '</p>
-        <p><strong>Telefon:</strong> ' . htmlspecialchars($client_infos['contactInfos']['phone']) . '</p>
-        <p><strong>Adresse:</strong> ' . htmlspecialchars($cleaningFormData['address']) . '</p>
-        <p><strong>Størrelse I kvm:</strong> ' . htmlspecialchars($cleaningFormData['size']) . '</p>
-        <p><strong>Antall bad:</strong> ' . htmlspecialchars($cleaningFormData['bathroomsnumber']) . '</p>
-        <p><strong>Ønsket dato:</strong> ' . htmlspecialchars($cleaningFormData['date']) . '</p>
-        <p><strong>Beskrivelse:</strong> ' . htmlspecialchars($cleaningFormData['notes']) . '</p>       
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Cleaning quote</h2>
+
+        <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Kundehenvendelse</h4>
+        <table cellspacing="0" cellpadding="10" border="1" style="border-collapse: collapse;margin-bottom:20px;">
+            <tr style="background-color: #f9f9f9;">
+                <th align="left">Navn</th>
+                <th align="left">E-post adresse</th>
+                <th align="left">Telefon</th>
+            </tr>
+            <tr>
+                <td>' . htmlspecialchars($client_infos['contactInfos']['name']) . '</td>
+                <td>' . htmlspecialchars($client_infos['contactInfos']['email']) . '</td>
+                <td>' . htmlspecialchars($client_infos['contactInfos']['phone']) . '</td>
+            </tr>
+        </table>   
+        <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Details</h4>
+        <table cellspacing="0" cellpadding="10" border="1" style="border-collapse: collapse; width: 100%;margin-bottom:20px;">
+            <tr style="background-color: #f9f9f9;">
+                <th align="left">Adresse</th>
+                <th align="left">Størrelse I kvm</th>
+                <th align="left">Antall bad</th>
+                <th align="left">Ønsket dato</th>
+                <th align="left">Beskrivelse</th>
+            </tr>
+            <tr>
+                <td>' . htmlspecialchars($cleaningFormData['address']) . '</td>
+                <td>' . htmlspecialchars($cleaningFormData['size']) . '</td>
+                <td>' . htmlspecialchars($cleaningFormData['bathroomsnumber']) . '</td>
+                <td>' . htmlspecialchars($cleaningFormData['date']) . '</td>
+                <td>' . htmlspecialchars($cleaningFormData['notes']) . '</td>
+            </tr>
+        </table>         
     ';
 
     add_filter('wp_mail_content_type', function () {
@@ -665,12 +754,7 @@ function send_cleaning_quote_final_action_callback()
     });
 
     $headers[] = 'From: Me Myself <me@example.net>';
-    $to = [
-        'mouss@4444.lt',
-        'eduardas@riktigflytting.no',
-        'dainius@4444.lt'
-    ];
-    $sent = wp_mail($to, 'Forespørsel på flyttevask', $body);
+    $sent = wp_mail('mouss@4444.lt', 'Price quote - final form from ' . $client_infos['contactInfos']['name'], $body);
     if ($sent) {
         echo 'Email sent successfully!';
     } else {
@@ -895,8 +979,8 @@ function send_moving_quote_email($data_step_1, $data_step_2, $property_type, $se
     }
 
     $body = '
-    <div style="font-family: Arial, sans-serif; color: #333;>
-        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Kundehenvendelse</h2>
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Kundehenvendelse</h2>
         <p><strong>Kundetype:</strong> ' . ucfirst($property_type_nor) . '</p>
         ';
     if ($property_type == "business") {
@@ -917,10 +1001,17 @@ function send_moving_quote_email($data_step_1, $data_step_2, $property_type, $se
 
     if (!empty((array) $data_step_2)) {
         $body .= '
-    <div style="font-family: Arial, sans-serif; color: #333;">
-        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Flyttelista</h2>
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Flyttelista</h2>
 
-        <div>';
+        <table cellspacing="0" cellpadding="8" border="1" style="border-collapse: collapse; width: 100%;max-width:600px; margin-top: 10px;">
+                <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th align="left">Vare</th>
+                    <th align="right">Antall</th>
+                </tr>
+                </thead>
+                <tbody>';
 
         $totalVolume = 0;
         foreach ($items_data as $label => $item) {
@@ -930,21 +1021,18 @@ function send_moving_quote_email($data_step_1, $data_step_2, $property_type, $se
             $total = round($qty * $vol, 2);
             $totalVolume += $total;
 
-            $body .= "<div style='margin-right:10px;'>
-                <span>" . str_replace('-', ' ', ucfirst($label)) . " </span>
-                <span> {$qty}</span>
-            </div>";
+            $body .= "<tr>
+                <td>" . str_replace('-', ' ', ucfirst($label)) . "</td>
+                <td align='right'>{$qty}</td>
+            </tr>";
         }
 
-        $body .= '</div>
-                <div style="margin-bottom:5px;">
-                    <p style="text-align:left;margin-top:5px;margin-bottom:5px;">
-                        <b><span style="color:#474747;margin-bottom:4px;text-align:left;">Total volum: </span></b>
-                        <span>' . round($totalVolume, 2) . '</span>
-                    </p>
-                </div>
+        $body .= "<tr style='font-weight: bold; background-color: #fafafa;'>
+                <td align='right'>Total volum:</td>
+                <td align='right'>" . round($totalVolume, 2) . " m³</td>
+            </tr>";
 
-        </div>';
+        $body .= '</tbody></table></div>';
     }
 
 
@@ -959,12 +1047,7 @@ function send_moving_quote_email($data_step_1, $data_step_2, $property_type, $se
     });
 
     $headers[] = 'From: Me Myself <me@example.net>';
-    $to = [
-        'mouss@4444.lt',
-        'eduardas@riktigflytting.no',
-        'dainius@4444.lt'
-    ];
-    $sent = wp_mail($to, 'Forespørsel på flytting', $body);
+    $sent = wp_mail('mouss@4444.lt', 'Moving quote - incomplete form - ' . $client_infos['name'], $body);
     if ($sent) {
         echo 'Email sent successfully!';
     } else {
@@ -978,10 +1061,10 @@ function send_cleaning_quote_email($data_step_1)
     $client_infos = (array) $data_step_1;
 
     $body = '
-    <div style="font-family: Arial, sans-serif;color: #333;">
-        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:18px;">Cleaning quote</h2>
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <h2 style="margin-bottom: 16px;color:#2f4c94;font-size:46px;">Cleaning quote</h2>
 
-        <h4 style="font-size:18px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Client contact infos</h4>
+        <h4 style="font-size:32px;font-weight:400;color:#2f4c94;margin-bottom: 4px;margin-top: 0;">Client contact infos</h4>
         <table cellspacing="0" cellpadding="10" border="1" style="border-collapse: collapse;margin-bottom:20px;">
             <tr style="background-color: #f9f9f9;">
                 <th align="left">Navn</th>
@@ -1007,12 +1090,7 @@ function send_cleaning_quote_email($data_step_1)
     });
 
     $headers[] = 'From: Me Myself <me@example.net>';
-    $to = [
-        'mouss@4444.lt',
-        'eduardas@riktigflytting.no',
-        'dainius@4444.lt'
-    ];
-    $sent = wp_mail($to, 'Forespørsel på flyttevask', $body);
+    $sent = wp_mail('mouss@4444.lt', 'Cleaning quote - incomplete form - ' . $client_infos['name'], $body);
     if ($sent) {
         echo 'Email sent successfully!';
     } else {
